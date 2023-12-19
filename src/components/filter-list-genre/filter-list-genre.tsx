@@ -1,16 +1,17 @@
 import React from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import {filtersSlice} from '../../store/slices/filters-slice';
-import {FiltersGenre} from '../../const';
+import {FilterGenre, FilterLevel} from '../../const';
 
 function FilterListGenreComponent () {
 
   const dispatch = useAppDispatch();
-  const stateFilter = useAppSelector((state) => state.filterGenre.filterGenre);
+  const stateFilter = useAppSelector((state) => state.filter.filterGenre);
 
   function handleClickFilter(evt: React.MouseEvent<HTMLInputElement>) {
     const filter = evt.currentTarget.value;
 
+    //dispatch(filtersSlice.actions.filterLevel(FilterLevel.Any));
     dispatch(filtersSlice.actions.filterGenre(filter));
   }
 
@@ -19,7 +20,7 @@ function FilterListGenreComponent () {
       <legend className="visually-hidden">Тематика</legend>
       <ul className="filter__list">
         <li className="filter__item">
-          <input onClick={handleClickFilter} type="radio" name="type" id="all" value={FiltersGenre.all} defaultChecked={stateFilter === FiltersGenre.all}/>
+          <input onClick={handleClickFilter} type="radio" name="type" id="all" value={FilterGenre.All} defaultChecked={stateFilter === FilterGenre.All}/>
           <label className="filter__label" htmlFor="all">
             <svg
               className="filter__icon"
@@ -33,7 +34,7 @@ function FilterListGenreComponent () {
           </label>
         </li>
         <li className="filter__item">
-          <input onClick={handleClickFilter} type="radio" name="type" id="adventure" value={FiltersGenre.adventures} defaultChecked={stateFilter === FiltersGenre.adventures}/>
+          <input onClick={handleClickFilter} type="radio" name="type" id="adventure" value={FilterGenre.Adventures} defaultChecked={stateFilter === FilterGenre.Adventures}/>
           <label className="filter__label" htmlFor="adventure">
             <svg
               className="filter__icon"
@@ -47,7 +48,7 @@ function FilterListGenreComponent () {
           </label>
         </li>
         <li className="filter__item">
-          <input onClick={handleClickFilter} type="radio" name="type" id="horror" value={FiltersGenre.horror} defaultChecked={stateFilter === FiltersGenre.horror}/>
+          <input onClick={handleClickFilter} type="radio" name="type" id="horror" value={FilterGenre.Horror} defaultChecked={stateFilter === FilterGenre.Horror}/>
           <label className="filter__label" htmlFor="horror">
             <svg
               className="filter__icon"
@@ -61,7 +62,7 @@ function FilterListGenreComponent () {
           </label>
         </li>
         <li className="filter__item">
-          <input onClick={handleClickFilter} type="radio" name="type" id="mystic" value={FiltersGenre.mystic} defaultChecked={stateFilter === FiltersGenre.mystic}/>
+          <input onClick={handleClickFilter} type="radio" name="type" id="mystic" value={FilterGenre.Mystic} defaultChecked={stateFilter === FilterGenre.Mystic}/>
           <label className="filter__label" htmlFor="mystic">
             <svg
               className="filter__icon"
@@ -75,7 +76,7 @@ function FilterListGenreComponent () {
           </label>
         </li>
         <li className="filter__item">
-          <input onClick={handleClickFilter} type="radio" name="type" id="detective" value={FiltersGenre.detective} defaultChecked={stateFilter === FiltersGenre.detective}/>
+          <input onClick={handleClickFilter} type="radio" name="type" id="detective" value={FilterGenre.Detective} defaultChecked={stateFilter === FilterGenre.Detective}/>
           <label className="filter__label" htmlFor="detective">
             <svg
               className="filter__icon"
@@ -89,7 +90,7 @@ function FilterListGenreComponent () {
           </label>
         </li>
         <li className="filter__item">
-          <input onClick={handleClickFilter} type="radio" name="type" id="sciFi" value={FiltersGenre.sciFi} defaultChecked={stateFilter === FiltersGenre.sciFi}/>
+          <input onClick={handleClickFilter} type="radio" name="type" id="sciFi" value={FilterGenre.SciFi} defaultChecked={stateFilter === FilterGenre.SciFi}/>
           <label className="filter__label" htmlFor="sciFi">
             <svg
               className="filter__icon"

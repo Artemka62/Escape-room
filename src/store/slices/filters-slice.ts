@@ -1,22 +1,27 @@
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
-import {FiltersGenre} from '../../const';
+import {FilterGenre, FilterLevel} from '../../const';
 
 type InitialState = {
   filterGenre: string;
+  filterLevel : string;
 }
 
 const initialState: InitialState = {
-  filterGenre: FiltersGenre.all,
+  filterGenre: FilterGenre.All,
+  filterLevel: FilterLevel.Any
 };
 
 const filtersSlice = createSlice({
-  name: 'filterGenre',
+  name: 'filter',
   initialState,
   reducers: {
     filterGenre(state, action: PayloadAction<string>) {
       state.filterGenre = action.payload;
-    }
+    },
+    filterLevel(state, action: PayloadAction<string>) {
+      state.filterLevel = action.payload;
+    },
   },
 });
 

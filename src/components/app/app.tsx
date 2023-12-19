@@ -26,7 +26,7 @@ function App(): JSX.Element {
           }
         />
         <Route
-          path={`${AppRoute.Quest}`}
+          path={`${AppRoute.Quest}/:id`}
           element ={
             <QuestPages title = {TitleDescription.QuestPage}/>
           }

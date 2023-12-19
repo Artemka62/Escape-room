@@ -1,21 +1,23 @@
-import {FiltersGenre} from '../../const';
-import {useAppSelector} from '../../hooks/use-store';
-import {CardQuestComponent} from '../card-quest-component/card-quest-component';
+import { FilterGenre, FilterLevel } from '../../const';
+import { useAppSelector } from '../../hooks/use-store';
+import { CardQuestComponent } from '../card-quest-component/card-quest-component';
 
-function CardsPlaceComponent () {
+function CardsPlaceComponent() {
   const stateQuestions = useAppSelector((state) => state.questions.questions);
-  const stateFilter = useAppSelector((state) => state.filterGenre.filterGenre);
-  const getQuestionsGenre = stateQuestions?.filter((question) => question.type === stateFilter);
-  const questions = stateFilter === FiltersGenre.all ? stateQuestions : getQuestionsGenre;
+  const stateFilterGenre = useAppSelector((state) => state.filter.filterGenre);
+  const stateFilterLevel = useAppSelector((state) => state.filter.filterLevel);
 
+  const filteredQuestions = stateQuestions
+    ?.filter((question) => stateFilterGenre === FilterGenre.All || question.type === stateFilterGenre)
+    .filter((question) => stateFilterLevel === FilterLevel.Any || question.level === stateFilterLevel);
 
   return (
     <div className="cards-grid">
-
-      {questions?.map((quest) => <CardQuestComponent key={quest.id} quest={quest}/>) }
-
+      {filteredQuestions?.map((quest) => (
+        <CardQuestComponent key={quest.id} quest={quest} />
+      ))}
     </div>
   );
 }
 
-export {CardsPlaceComponent};
+export { CardsPlaceComponent };
