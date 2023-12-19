@@ -38,6 +38,16 @@ const AUTH_TOKEN_KEY_NAME = 'escape-room-token';
 const URL_SERVER = 'https://grading.design.htmlacademy.pro/v1/escape-room';
 const REQUEST_TIMEOUT = 5000;
 
+
+const FiltersGenre = {
+  all: 'all',
+  adventures: 'adventures',
+  horror: 'horror',
+  mystic: 'mystic',
+  detective: 'detective',
+  sciFi: 'sci-fi'
+} as const;
+
 export {
   AppRoute,
   TitleDescription,
@@ -45,5 +55,6 @@ export {
   AuthorizationStatus,
   AUTH_TOKEN_KEY_NAME,
   URL_SERVER,
-  REQUEST_TIMEOUT
+  REQUEST_TIMEOUT,
+  FiltersGenre
 };
