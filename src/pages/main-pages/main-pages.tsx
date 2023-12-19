@@ -1,5 +1,8 @@
 import { NavigationComponent } from '../../components/navigation-component/navigation-component';
 import {useDocumentTitle} from '../../hooks/use-document-title';
+import { useAppDispatch } from '../../hooks/use-store';
+import { checkAuthAction } from '../../services/thunk/check-auth-actions';
+
 
 type MainPagesProps = {
   title: string;
@@ -8,6 +11,10 @@ type MainPagesProps = {
 function MainPages ({title}: MainPagesProps) {
 
   useDocumentTitle(title);
+
+  const dispatch = useAppDispatch();
+
+  dispatch(checkAuthAction());
 
   return (
     <div className="wrapper">
