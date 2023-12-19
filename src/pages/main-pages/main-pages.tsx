@@ -1,3 +1,4 @@
+import { NavigationComponent } from '../../components/navigation-component/navigation-component';
 import {useDocumentTitle} from '../../hooks/use-document-title';
 
 type MainPagesProps = {
@@ -17,25 +18,10 @@ function MainPages ({title}: MainPagesProps) {
               <use xlinkHref="#logo" />
             </svg>
           </span>
-          <nav className="main-nav header__main-nav">
-            <ul className="main-nav__list">
-              <li className="main-nav__item">
-                <a className="link active" href="index.html">
-                  Квесты
-                </a>
-              </li>
-              <li className="main-nav__item">
-                <a className="link" href="contacts.html">
-                  Контакты
-                </a>
-              </li>
-              <li className="main-nav__item">
-                <a className="link" href="my-quests.html">
-                  Мои бронирования
-                </a>
-              </li>
-            </ul>
-          </nav>
+
+          <NavigationComponent/>
+
+
           <div className="header__side-nav">
             <a className="btn btn--accent header__side-item" href="#">
               Выйти
