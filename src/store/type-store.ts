@@ -20,7 +20,7 @@ type QuestCard = {
   peopleMinMax: number[];
 }
 
-type QuestionCard = {
+type QuestPageCard = {
   id: string;
   title: string;
   previewImg: string;
@@ -31,4 +31,4 @@ type QuestionCard = {
 }
 
 
-export type {State, AppDispatch, StateAuth, QuestCard};
+export type {State, AppDispatch, StateAuth, QuestCard, };

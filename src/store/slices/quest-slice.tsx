@@ -1,7 +1,7 @@
 import type {QuestCard} from '../type-store';
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
-import {fetchQuestAction} from '../../services/thunk/fetch-question';
+import {fetchQuestAction} from '../../services/thunk/fetch-quest';
 
 
 type StateQuest = {
@@ -16,8 +16,8 @@ const initialState: StateQuest = {
   error: null,
 };
 
-const questionSlice = createSlice({
-  name: 'question',
+const questSlice = createSlice({
+  name: 'quest',
   initialState,
   reducers: {
     addQuestionList(state, action: PayloadAction<QuestCard>) {
@@ -42,4 +42,4 @@ const questionSlice = createSlice({
   }
 });
 
-export {questionSlice};
+export {questSlice};

@@ -3,7 +3,7 @@ import {useAppSelector} from '../../hooks/use-store';
 import {CardQuestComponent} from '../card-quest-component/card-quest-component';
 
 function CardsPlaceComponent() {
-  const stateQuestions = useAppSelector((state) => state.quests.questions);
+  const stateQuestions = useAppSelector((state) => state.quests.quests);
   const stateFilterGenre = useAppSelector((state) => state.filter.filterGenre);
   const stateFilterLevel = useAppSelector((state) => state.filter.filterLevel);
 

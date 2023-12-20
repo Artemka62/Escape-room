@@ -1,16 +1,16 @@
 import type {QuestCard} from '../type-store';
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
-import {fetchQuestsAction} from '../../services/thunk/fetch-questions';
+import {fetchQuestsAction} from '../../services/thunk/fetch-quests';
 
 type StateQuests = {
-  questions: QuestCard[] | null;
+  quests: QuestCard[] | null;
   loadingStatus: boolean | null;
   error: null | string;
 }
 
 const initialState: StateQuests = {
-  questions: null,
+  quests: null,
   loadingStatus: null,
   error: null,
 };
@@ -20,13 +20,13 @@ const questsSlice = createSlice({
   initialState,
   reducers: {
     addQuestsList(state, action: PayloadAction<QuestCard[]>) {
-      state.questions = action.payload;
+      state.quests = action.payload;
     },
   },
   extraReducers(builder) {
     builder
       .addCase(fetchQuestsAction.fulfilled, (state, action) => {
-        state.questions = action.payload;
+        state.quests = action.payload;
         state.loadingStatus = false;
         state.error = null;
       })

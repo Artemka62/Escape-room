@@ -3,7 +3,7 @@ import {CardsPlaceComponent} from '../../components/cards-place-component/cards-
 import {useDocumentTitle} from '../../hooks/use-document-title';
 import {useAppDispatch} from '../../hooks/use-store';
 import {checkAuthAction} from '../../services/thunk/check-auth-actions';
-import {fetchQuestsAction} from '../../services/thunk/fetch-questions';
+import {fetchQuestsAction} from '../../services/thunk/fetch-quests';
 import {FilterListGenreComponent} from '../../components/filter-list-genre/filter-list-genre';
 import {FilterListLevelComponent} from '../../components/filter-list-level/filter-list-level';
 import { useEffect } from 'react';

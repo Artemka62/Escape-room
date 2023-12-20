@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {QuestCard} from '../../store/type-store';
 import {Link} from 'react-router-dom';
 import {AppRoute, LevelQuest, LevelQuestRu, Person} from '../../const';
-import {fetchQuestAction} from '../../services/thunk/fetch-question';
+import {fetchQuestAction} from '../../services/thunk/fetch-quest';
 import {useAppDispatch} from '../../hooks/use-store';
 
 

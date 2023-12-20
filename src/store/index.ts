@@ -1,16 +1,16 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {createApi} from '../services/api';
 import {authStatusSlice} from './slices/auth-status-slice';
-import {questsSlice} from './slices/questions-slice';
+import {questsSlice} from './slices/quests-slice';
 import {filtersSlice} from './slices/filters-slice';
-import {questionSlice} from './slices/quest-slice';
+import {questSlice} from './slices/quest-slice';
 
 
 const reducer = combineReducers({
   [authStatusSlice.name]: authStatusSlice.reducer,
   [questsSlice.name]: questsSlice.reducer,
   [filtersSlice.name]: filtersSlice.reducer,
-  [questionSlice.name]: questionSlice.reducer
+  [questSlice.name]: questSlice.reducer
 });
 
 const api = createApi();

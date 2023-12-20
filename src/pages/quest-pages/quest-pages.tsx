@@ -3,7 +3,7 @@ import {LogotypeComponent} from '../../components/logotype-component/logotype-co
 import {NavigationComponent} from '../../components/navigation-component/navigation-component';
 import {useDocumentTitle} from '../../hooks/use-document-title';
 import {useAppDispatch} from '../../hooks/use-store';
-import {fetchQuestAction} from '../../services/thunk/fetch-question';
+import {fetchQuestAction} from '../../services/thunk/fetch-quest';
 
 type QuestPagesProps = {
   title: string;
