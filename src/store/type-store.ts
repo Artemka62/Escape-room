@@ -28,7 +28,10 @@ type QuestPageCard = {
   level: string;
   type: string;
   peopleMinMax: number[];
+  description: string;
+  coverImg: string;
+  coverImgWebp: string;
 }
 
 
-export type {State, AppDispatch, StateAuth, QuestCard, };
+export type {State, AppDispatch, StateAuth, QuestCard, QuestPageCard};

@@ -1,12 +1,12 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ApiRoute} from '../../const';
 import type {Thunk} from '../type-service';
-import type {QuestCard} from '../../store/type-store';
+import type {QuestPageCard} from '../../store/type-store';
 
-const fetchQuestAction = createAsyncThunk<QuestCard, string, Thunk>(
+const fetchQuestAction = createAsyncThunk<QuestPageCard, string, Thunk>(
   'data/fetchQuest',
-  async (id, { extra: api}) => {
-    const {data} = await api.get<QuestCard>(`${ApiRoute.Quests}/${id}`);
+  async (id, {extra: api}) => {
+    const {data} = await api.get<QuestPageCard>(`${ApiRoute.Quests}/${id}`);
 
     return data;
   },

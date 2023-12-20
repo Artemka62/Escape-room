@@ -1,11 +1,10 @@
-import type {QuestCard} from '../type-store';
+import type {QuestPageCard} from '../type-store';
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import {fetchQuestAction} from '../../services/thunk/fetch-quest';
 
-
 type StateQuest = {
-  quest: QuestCard | null;
+  quest: QuestPageCard | null;
   loadingStatus: boolean | null;
   error: null | string;
 }
@@ -20,7 +19,7 @@ const questSlice = createSlice({
   name: 'quest',
   initialState,
   reducers: {
-    addQuestionList(state, action: PayloadAction<QuestCard>) {
+    addQuestionList(state, action: PayloadAction<QuestPageCard>) {
       state.quest = action.payload;
     },
   },

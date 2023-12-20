@@ -2,20 +2,29 @@ import {useParams} from 'react-router-dom';
 import {LogotypeComponent} from '../../components/logotype-component/logotype-component';
 import {NavigationComponent} from '../../components/navigation-component/navigation-component';
 import {useDocumentTitle} from '../../hooks/use-document-title';
-import {useAppDispatch} from '../../hooks/use-store';
+import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import {fetchQuestAction} from '../../services/thunk/fetch-quest';
+import { useEffect } from 'react';
+import { Person } from '../../const';
+import { setLevel, setGenre} from '../../utils';
 
 type QuestPagesProps = {
   title: string;
 }
 
 function QuestPages ({title}: QuestPagesProps) {
+  const {id} = useParams<string>();
+  const dispatch = useAppDispatch();
+  const quest = useAppSelector((state)=> state.quest.quest);
 
   useDocumentTitle(title);
-  const id = useParams<string>();
-  const dispatch = useAppDispatch();
 
-  dispatch(fetchQuestAction(id.id));
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchQuestAction(id));
+    }
+  },[]);
+
 
   return(
     <div className="wrapper">
@@ -23,7 +32,6 @@ function QuestPages ({title}: QuestPagesProps) {
         <div className="container container--size-l">
 
           <LogotypeComponent/>
-
           <NavigationComponent/>
 
           <div className="header__side-nav">
@@ -61,34 +69,27 @@ function QuestPages ({title}: QuestPagesProps) {
         <div className="container container--size-l">
           <div className="quest-page__content">
             <h1 className="title title--size-l title--uppercase quest-page__title">
-              Маньяк
+              {quest?.title}
             </h1>
             <p className="subtitle quest-page__subtitle">
-              <span className="visually-hidden">Жанр:</span>Ужасы
+              <span className="visually-hidden">Жанр:</span>{setGenre(quest?.type ?? '')}
             </p>
             <ul className="tags tags--size-l quest-page__tags">
               <li className="tags__item">
                 <svg width={11} height={14} aria-hidden="true">
                   <use xlinkHref="#icon-person" />
                 </svg>
-                3–6&nbsp;чел
+                {`${quest?.peopleMinMax[Person.Min] ?? ''}–${quest?.peopleMinMax[Person.Max] ?? ''}`} чел
               </li>
               <li className="tags__item">
                 <svg width={14} height={14} aria-hidden="true">
                   <use xlinkHref="#icon-level" />
                 </svg>
-                Средний
+                {setLevel(quest?.level ?? '')}
               </li>
             </ul>
             <p className="quest-page__description">
-              В&nbsp;комнате с&nbsp;приглушённым светом несколько человек,
-              незнакомых друг с&nbsp;другом, приходят в&nbsp;себя. Никто
-              не&nbsp;помнит, что произошло прошлым вечером. Руки и&nbsp;ноги
-              связаны, но&nbsp;одному из&nbsp;вас получилось освободиться.
-              На&nbsp;стене висит пугающий таймер и&nbsp;запущен отсчёт
-              60&nbsp;минут. Сможете&nbsp;ли вы&nbsp;разобраться в&nbsp;стрессовой
-              ситуации, помочь другим, разобраться что произошло и&nbsp;выбраться
-              из&nbsp;комнаты?
+              {quest?.description}
             </p>
             <a
               className="btn btn--accent btn--cta quest-page__btn"

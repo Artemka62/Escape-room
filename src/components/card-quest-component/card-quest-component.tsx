@@ -1,9 +1,10 @@
 import {useState} from 'react';
 import {QuestCard} from '../../store/type-store';
 import {Link} from 'react-router-dom';
-import {AppRoute, LevelQuest, LevelQuestRu, Person} from '../../const';
+import {AppRoute, Person} from '../../const';
 import {fetchQuestAction} from '../../services/thunk/fetch-quest';
 import {useAppDispatch} from '../../hooks/use-store';
+import {setLevel} from '../../utils';
 
 
 type QuestProps = {
@@ -15,7 +16,7 @@ function CardQuestComponent ({quest}: QuestProps) {
   const dispatch = useAppDispatch();
 
   const [cardState, setCardState] = useState({
-    offerId: quest.id
+    questId: quest.id
   });
 
 
@@ -31,21 +32,10 @@ function CardQuestComponent ({quest}: QuestProps) {
   function handelClickCard () {
     setCardState({
       ...cardState,
-      offerId: quest.id,
+      questId: quest.id,
     });
 
-    dispatch(fetchQuestAction(cardState.offerId));
-  }
-
-  function setLevel (level: string) {
-    switch (level) {
-      case LevelQuest.Easy:
-        return LevelQuestRu.Easy;
-      case LevelQuest.Medium:
-        return LevelQuestRu.Medium;
-      case LevelQuest.Hard:
-        return LevelQuestRu.Hard;
-    }
+    dispatch(fetchQuestAction(cardState.questId));
   }
 
   return (

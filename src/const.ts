@@ -46,17 +46,19 @@ enum FilterGenre {
   SciFi = 'sci-fi'
 }
 
-enum LevelQuest {
-  Easy = 'easy',
-  Medium = 'medium',
-  Hard = 'hard'
-}
-
 const LevelQuestRu = {
   Easy: 'легкий',
   Medium: 'средний',
   Hard: 'сложный'
 } as const;
+
+const GenreQuestRu = {
+  Adventures: 'приключения',
+  Horror:'ужасы',
+  Mystic: 'мистика',
+  Detective: 'детектив',
+  SciFi: 'sci-fi'
+}as const;
 
 const FilterLevel = {
   Any: 'any',
@@ -80,8 +82,8 @@ export {
   ApiRoute,
   AuthorizationStatus,
   FilterGenre,
-  LevelQuest,
   LevelQuestRu,
   FilterLevel,
-  Person
+  Person,
+  GenreQuestRu
 };
