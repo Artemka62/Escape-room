@@ -41,7 +41,7 @@ function App(): JSX.Element {
           }
         />
         <Route
-          path={`${AppRoute.Booking}`}
+          path={`${AppRoute.Quest}/:id${AppRoute.Booking}`}
           element ={
             <BookingPages title = {TitleDescription.BookingPage}/>
           }

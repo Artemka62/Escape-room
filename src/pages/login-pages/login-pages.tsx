@@ -3,9 +3,9 @@ import {NavigationComponent} from '../../components/navigation-component/navigat
 import {useDocumentTitle} from '../../hooks/use-document-title';
 import {useForm, SubmitHandler} from 'react-hook-form';
 import {loginAction} from '../../services/thunk/login-actions';
-import { useAppDispatch } from '../../hooks/use-store';
-import { checkAuthAction } from '../../services/thunk/check-auth-actions';
-import { useEffect } from 'react';
+import {useAppDispatch} from '../../hooks/use-store';
+import {checkAuthAction} from '../../services/thunk/check-auth-actions';
+import {useEffect} from 'react';
 
 type LoginPagesProps = {
   title: string;

@@ -17,7 +17,7 @@ function NavigationComponent () {
           </Link>
         </li>
         <li className="main-nav__item">
-          <Link to={AppRoute.MyQuest} className="link active">
+          <Link to={AppRoute.MyQuest} className="link ">
             Мои бронирования
           </Link>
         </li>

@@ -1,13 +1,14 @@
-import {useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import {LogotypeComponent} from '../../components/logotype-component/logotype-component';
 import {NavigationComponent} from '../../components/navigation-component/navigation-component';
 import {useDocumentTitle} from '../../hooks/use-document-title';
 import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import {fetchQuestAction} from '../../services/thunk/fetch-quest';
-import { useEffect } from 'react';
-import { Person } from '../../const';
-import { setLevel, setGenre} from '../../utils';
-import { ProfileComponent } from '../../components/profile-component/profile-component';
+import {useEffect} from 'react';
+import {AppRoute, AuthorizationStatus, Person} from '../../const';
+import {setLevel, setGenre} from '../../utils';
+import {ProfileComponent} from '../../components/profile-component/profile-component';
+
 
 type QuestPagesProps = {
   title: string;
@@ -17,15 +18,17 @@ function QuestPages ({title}: QuestPagesProps) {
   const {id} = useParams<string>();
   const dispatch = useAppDispatch();
   const quest = useAppSelector((state)=> state.quest.quest);
+  const authStatus = useAppSelector((state)=> state.authorizationStatus.authStatus);
+
 
   useDocumentTitle(title);
 
   useEffect(() => {
+
     if (id) {
       dispatch(fetchQuestAction(id));
     }
   },[]);
-
 
   return(
     <div className="wrapper">
@@ -80,12 +83,11 @@ function QuestPages ({title}: QuestPagesProps) {
             <p className="quest-page__description">
               {quest?.description}
             </p>
-            <a
+            <Link to={authStatus === AuthorizationStatus.Auth ? `${AppRoute.Quest}/${quest?.id ?? ''}${AppRoute.Booking}` : AppRoute.Login}
               className="btn btn--accent btn--cta quest-page__btn"
-              href="booking.html"
             >
               Забронировать
-            </a>
+            </Link>
           </div>
         </div>
       </main>
