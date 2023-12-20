@@ -3,13 +3,13 @@ import {ApiRoute} from '../../const';
 import type {Thunk} from '../type-service';
 import type {QuestCard} from '../../store/type-store';
 
-const fetchQuestsAction = createAsyncThunk<QuestCard[], undefined, Thunk>(
+const fetchQuestAction = createAsyncThunk<QuestCard, string, Thunk>(
   'data/fetchQuestions',
-  async (_arg, { extra: api}) => {
-    const {data} = await api.get<QuestCard[]>(ApiRoute.Quests);
+  async (id, { extra: api}) => {
+    const {data} = await api.get<QuestCard>(`${ApiRoute.Quests}/${id}`);
 
     return data;
   },
 );
 
-export{fetchQuestsAction};
+export{fetchQuestAction};

@@ -1,6 +1,9 @@
-import { LogotypeComponent } from '../../components/logotype-component/logotype-component';
-import { NavigationComponent } from '../../components/navigation-component/navigation-component';
+import {useParams} from 'react-router-dom';
+import {LogotypeComponent} from '../../components/logotype-component/logotype-component';
+import {NavigationComponent} from '../../components/navigation-component/navigation-component';
 import {useDocumentTitle} from '../../hooks/use-document-title';
+import {useAppDispatch} from '../../hooks/use-store';
+import {fetchQuestAction} from '../../services/thunk/fetch-question';
 
 type QuestPagesProps = {
   title: string;
@@ -9,6 +12,10 @@ type QuestPagesProps = {
 function QuestPages ({title}: QuestPagesProps) {
 
   useDocumentTitle(title);
+  const id = useParams<string>();
+  const dispatch = useAppDispatch();
+
+  dispatch(fetchQuestAction(id.id));
 
   return(
     <div className="wrapper">

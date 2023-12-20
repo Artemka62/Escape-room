@@ -10,6 +10,16 @@ type StateAuth = {
   isLoadingLogout: boolean;
 };
 
+type QuestCard = {
+  id: string;
+  title: string;
+  previewImg: string;
+  previewImgWebp: string;
+  level: string;
+  type: string;
+  peopleMinMax: number[];
+}
+
 type QuestionCard = {
   id: string;
   title: string;
@@ -17,7 +27,8 @@ type QuestionCard = {
   previewImgWebp: string;
   level: string;
   type: string;
-  peopleMinMax: [number];
+  peopleMinMax: number[];
 }
 
-export type {State, AppDispatch, StateAuth, QuestionCard};
+
+export type {State, AppDispatch, StateAuth, QuestCard};

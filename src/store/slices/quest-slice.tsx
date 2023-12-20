@@ -1,45 +1,45 @@
 import type {QuestCard} from '../type-store';
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
-import {fetchQuestsAction} from '../../services/thunk/fetch-questions';
+import {fetchQuestAction} from '../../services/thunk/fetch-question';
 
-type StateQuests = {
-  questions: QuestCard[] | null;
+
+type StateQuest = {
+  quest: QuestCard | null;
   loadingStatus: boolean | null;
   error: null | string;
 }
 
-const initialState: StateQuests = {
-  questions: null,
+const initialState: StateQuest = {
+  quest: null,
   loadingStatus: null,
   error: null,
 };
 
-const questsSlice = createSlice({
-  name: 'quests',
+const questionSlice = createSlice({
+  name: 'question',
   initialState,
   reducers: {
-    addQuestsList(state, action: PayloadAction<QuestCard[]>) {
-      state.questions = action.payload;
+    addQuestionList(state, action: PayloadAction<QuestCard>) {
+      state.quest = action.payload;
     },
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchQuestsAction.fulfilled, (state, action) => {
-        state.questions = action.payload;
+      .addCase(fetchQuestAction.fulfilled, (state, action) => {
+        state.quest = action.payload;
         state.loadingStatus = false;
         state.error = null;
       })
-      .addCase(fetchQuestsAction.pending, (state) => {
+      .addCase(fetchQuestAction.pending, (state) => {
         state.loadingStatus = true;
         state.error = null;
       })
-      .addCase(fetchQuestsAction.rejected, (state, action) => {
+      .addCase(fetchQuestAction.rejected, (state, action) => {
         state.error = action.error.message || 'Unknown error';
         state.loadingStatus = false;
       });
   }
 });
 
-export {questsSlice};
-
+export {questionSlice};

@@ -65,6 +65,11 @@ const FilterLevel = {
   Hard: 'hard'
 } as const;
 
+const Person = {
+  Min: 0,
+  Max: 1
+} as const;
+
 
 export {
   AUTH_TOKEN_KEY_NAME,
@@ -77,5 +82,6 @@ export {
   FilterGenre,
   LevelQuest,
   LevelQuestRu,
-  FilterLevel
+  FilterLevel,
+  Person
 };

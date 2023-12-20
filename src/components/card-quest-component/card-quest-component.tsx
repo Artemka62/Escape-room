@@ -1,15 +1,18 @@
-import { useState } from 'react';
-//import { useAppDispatch } from '../../hooks/use-store';
-import {QuestionCard} from '../../store/type-store';
-import { Link } from 'react-router-dom';
-import { AppRoute, LevelQuest, LevelQuestRu } from '../../const';
+import {useState} from 'react';
+import {QuestCard} from '../../store/type-store';
+import {Link} from 'react-router-dom';
+import {AppRoute, LevelQuest, LevelQuestRu, Person} from '../../const';
+import {fetchQuestAction} from '../../services/thunk/fetch-question';
+import {useAppDispatch} from '../../hooks/use-store';
+
 
 type QuestProps = {
-  quest: QuestionCard;
+  quest: QuestCard;
 }
 
 function CardQuestComponent ({quest}: QuestProps) {
-  //const dispatch = useAppDispatch();
+
+  const dispatch = useAppDispatch();
 
   const [cardState, setCardState] = useState({
     offerId: quest.id
@@ -18,6 +21,7 @@ function CardQuestComponent ({quest}: QuestProps) {
 
   function handelPointOffer () {
     //dispatch(offerSlice.actions.addLoadOfferCard(offer));
+
   }
 
   function handelLeavePointOffer () {
@@ -29,6 +33,8 @@ function CardQuestComponent ({quest}: QuestProps) {
       ...cardState,
       offerId: quest.id,
     });
+
+    dispatch(fetchQuestAction(cardState.offerId));
   }
 
   function setLevel (level: string) {
@@ -75,7 +81,7 @@ function CardQuestComponent ({quest}: QuestProps) {
             <svg width={11} height={14} aria-hidden="true">
               <use xlinkHref="#icon-person" />
             </svg>
-            2–5&nbsp;чел
+            {`${quest.peopleMinMax[Person.Min]}–${quest.peopleMinMax[Person.Max]}`}&nbsp;чел
           </li>
           <li className="tags__item">
             <svg width={14} height={14} aria-hidden="true">

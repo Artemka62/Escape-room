@@ -1,4 +1,3 @@
-//import { useEffect } from 'react';
 import { FilterLevel } from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import {filtersSlice} from '../../store/slices/filters-slice';
@@ -6,11 +5,6 @@ import {filtersSlice} from '../../store/slices/filters-slice';
 function FilterListLevelComponent () {
   const dispatch = useAppDispatch();
   const stateFilter = useAppSelector((state) => state.filter.filterLevel);
- // const states = useAppSelector((state) => state.filter.filterGenre);
-
-  // useEffect(() => {
-  //   dispatch(filtersSlice.actions.filterLevel(FilterLevel.Any));
-  // }, [states ])
 
   function handleClickFilter(evt: React.MouseEvent<HTMLInputElement>) {
     const filter = evt.currentTarget.value;

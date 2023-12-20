@@ -1,7 +1,7 @@
 import React from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import {filtersSlice} from '../../store/slices/filters-slice';
-import {FilterGenre, FilterLevel} from '../../const';
+import {FilterGenre} from '../../const';
 
 function FilterListGenreComponent () {
 
@@ -11,7 +11,6 @@ function FilterListGenreComponent () {
   function handleClickFilter(evt: React.MouseEvent<HTMLInputElement>) {
     const filter = evt.currentTarget.value;
 
-    //dispatch(filtersSlice.actions.filterLevel(FilterLevel.Any));
     dispatch(filtersSlice.actions.filterGenre(filter));
   }
 
