@@ -7,6 +7,7 @@ import {LoginPages} from '../../pages/login-pages/login-pages';
 import {QuestPages} from '../../pages/quest-pages/quest-pages';
 import {MyQuestsPages} from '../../pages/my-quests-pages/my-quests-pages';
 import {ContactsPages} from '../../pages/contacts-pages/contacts-pages';
+import { AuthorizationRoute } from '../authorization-route/authorization-route';
 
 function App(): JSX.Element {
 
@@ -22,7 +23,9 @@ function App(): JSX.Element {
         <Route
           path={`${AppRoute.Login}`}
           element ={
-            <LoginPages title = {TitleDescription.LoginPage}/>
+            <AuthorizationRoute>
+              <LoginPages title = {TitleDescription.LoginPage}/>
+            </AuthorizationRoute>
           }
         />
         <Route

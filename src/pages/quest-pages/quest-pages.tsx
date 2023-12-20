@@ -7,6 +7,7 @@ import {fetchQuestAction} from '../../services/thunk/fetch-quest';
 import { useEffect } from 'react';
 import { Person } from '../../const';
 import { setLevel, setGenre} from '../../utils';
+import { ProfileComponent } from '../../components/profile-component/profile-component';
 
 type QuestPagesProps = {
   title: string;
@@ -34,20 +35,8 @@ function QuestPages ({title}: QuestPagesProps) {
           <LogotypeComponent/>
           <NavigationComponent/>
 
-          <div className="header__side-nav">
-            <a
-              className="btn header__side-item header__login-btn"
-              href="login.html"
-            >
-              Вход
-            </a>
-            <a
-              className="link header__side-item header__phone-link"
-              href="tel:88003335599"
-            >
-              8 (000) 111-11-11
-            </a>
-          </div>
+          <ProfileComponent/>
+
         </div>
       </header>
       <main className="decorated-page quest-page">

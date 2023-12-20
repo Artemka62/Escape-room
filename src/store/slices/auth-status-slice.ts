@@ -3,8 +3,8 @@ import {AuthorizationStatus} from '../../const';
 import type {StateAuth} from '../type-store';
 import {checkAuthAction} from '../../services/thunk/check-auth-actions';
 import type {PayloadAction} from '@reduxjs/toolkit';
-import { loginAction } from '../../services/thunk/login-actions';
-import { logoutAction } from '../../services/thunk/logout-action';
+import {loginAction} from '../../services/thunk/login-actions';
+import {logoutAction} from '../../services/thunk/logout-action';
 
 const initialState: StateAuth = {
   authStatus: AuthorizationStatus.Unknown,

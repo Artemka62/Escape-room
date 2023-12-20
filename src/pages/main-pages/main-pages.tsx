@@ -7,6 +7,7 @@ import {fetchQuestsAction} from '../../services/thunk/fetch-quests';
 import {FilterListGenreComponent} from '../../components/filter-list-genre/filter-list-genre';
 import {FilterListLevelComponent} from '../../components/filter-list-level/filter-list-level';
 import { useEffect } from 'react';
+import { ProfileComponent } from '../../components/profile-component/profile-component';
 
 
 type MainPagesProps = {
@@ -36,18 +37,8 @@ function MainPages ({title}: MainPagesProps) {
 
           <NavigationComponent/>
 
+          <ProfileComponent/>
 
-          <div className="header__side-nav">
-            <a className="btn btn--accent header__side-item" href="#">
-              Выйти
-            </a>
-            <a
-              className="link header__side-item header__phone-link"
-              href="tel:88003335599"
-            >
-              8 (000) 111-11-11
-            </a>
-          </div>
         </div>
       </header>
       <main className="page-content">
