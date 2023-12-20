@@ -1,11 +1,12 @@
-import { LogotypeComponent} from '../../components/logotype-component/logotype-component';
+import {LogotypeComponent} from '../../components/logotype-component/logotype-component';
 import {NavigationComponent} from '../../components/navigation-component/navigation-component';
 import {useDocumentTitle} from '../../hooks/use-document-title';
-import {useForm, SubmitHandler} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import {loginAction} from '../../services/thunk/login-actions';
 import {useAppDispatch} from '../../hooks/use-store';
 import {checkAuthAction} from '../../services/thunk/check-auth-actions';
 import {useEffect} from 'react';
+import type {SubmitHandler} from 'react-hook-form';
 
 type LoginPagesProps = {
   title: string;
@@ -32,7 +33,6 @@ function LoginPages({title}: LoginPagesProps) {
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
 
-    console.log(data);
     dispatch(loginAction({login: data.email, password: data.password}));
   };
 
@@ -74,7 +74,7 @@ function LoginPages({title}: LoginPagesProps) {
               action="https://echo.htmlacademy.ru/"
               method="post"
               className="login-form"
-              onSubmit={handleSubmit(onSubmit)}
+              onSubmit={(event) =>void handleSubmit(onSubmit)(event)}
             >
               <div className="login-form__inner-wrapper">
                 <h1 className="title title--size-s login-form__title">
@@ -135,7 +135,7 @@ function LoginPages({title}: LoginPagesProps) {
                   type="checkbox"
                   id="id-order-agreement"
                   name="user-agreement"
-                  required=""
+                  required
                 />
                 <span className="custom-checkbox__icon">
                   <svg width={20} height={17} aria-hidden="true">

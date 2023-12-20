@@ -33,5 +33,15 @@ type QuestPageCard = {
   coverImgWebp: string;
 }
 
+type BookingQuest = {
+  date: string;
+  time: string;
+  contactPerson: string;
+  phone: string;
+  withChildren: boolean;
+  peopleCount: number;
+  placeId: string;
+}
 
-export type {State, AppDispatch, StateAuth, QuestCard, QuestPageCard};
+
+export type {State, AppDispatch, StateAuth, QuestCard, QuestPageCard, BookingQuest};

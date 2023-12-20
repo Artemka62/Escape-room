@@ -8,6 +8,7 @@ import {useEffect} from 'react';
 import {AppRoute, AuthorizationStatus, Person} from '../../const';
 import {setLevel, setGenre} from '../../utils';
 import {ProfileComponent} from '../../components/profile-component/profile-component';
+import {getBookQuest} from '../../services/thunk/get-booking-quest';
 
 
 type QuestPagesProps = {
@@ -29,6 +30,11 @@ function QuestPages ({title}: QuestPagesProps) {
       dispatch(fetchQuestAction(id));
     }
   },[]);
+
+
+  function handleClick () {
+    dispatch(getBookQuest(quest?.id || ''));
+  }
 
   return(
     <div className="wrapper">
@@ -85,6 +91,7 @@ function QuestPages ({title}: QuestPagesProps) {
             </p>
             <Link to={authStatus === AuthorizationStatus.Auth ? `${AppRoute.Quest}/${quest?.id ?? ''}${AppRoute.Booking}` : AppRoute.Login}
               className="btn btn--accent btn--cta quest-page__btn"
+              onClick={handleClick}
             >
               Забронировать
             </Link>

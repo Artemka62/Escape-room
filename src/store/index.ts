@@ -4,13 +4,15 @@ import {authStatusSlice} from './slices/auth-status-slice';
 import {questsSlice} from './slices/quests-slice';
 import {filtersSlice} from './slices/filters-slice';
 import {questSlice} from './slices/quest-slice';
+import { bookingQuestSlice } from './slices/bookink-quest-slice';
 
 
 const reducer = combineReducers({
   [authStatusSlice.name]: authStatusSlice.reducer,
   [questsSlice.name]: questsSlice.reducer,
   [filtersSlice.name]: filtersSlice.reducer,
-  [questSlice.name]: questSlice.reducer
+  [questSlice.name]: questSlice.reducer,
+  [bookingQuestSlice.name]: bookingQuestSlice.reducer
 });
 
 const api = createApi();
