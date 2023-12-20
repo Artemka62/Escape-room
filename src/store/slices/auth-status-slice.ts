@@ -3,6 +3,8 @@ import {AuthorizationStatus} from '../../const';
 import type {StateAuth} from '../type-store';
 import {checkAuthAction} from '../../services/thunk/check-auth-actions';
 import type {PayloadAction} from '@reduxjs/toolkit';
+import { loginAction } from '../../services/thunk/login-actions';
+import { logoutAction } from '../../services/thunk/logout-action';
 
 const initialState: StateAuth = {
   authStatus: AuthorizationStatus.Unknown,
@@ -34,6 +36,21 @@ const authStatusSlice = createSlice({
       })
       .addCase(checkAuthAction.pending, (state) => {
         state.isLoadingAuth = true;
+      })
+      .addCase(loginAction.fulfilled, (state) => {
+        state.authStatus = AuthorizationStatus.Auth;
+        state.error = null;
+      })
+      .addCase(loginAction.rejected, (state, action) => {
+        state.authStatus = AuthorizationStatus.NoAuth;
+        state.error = action.error.message || 'Unknown error';
+      })
+      .addCase(logoutAction.fulfilled, (state) => {
+        state.authStatus = AuthorizationStatus.NoAuth;
+        state.isLoadingLogout = false;
+      })
+      .addCase(logoutAction.pending, (state) => {
+        state.isLoadingLogout = true;
       });
   }
 });

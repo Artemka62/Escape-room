@@ -1,24 +1,41 @@
-import { LogotypeComponent } from '../../components/logotype-component/logotype-component';
-import { NavigationComponent } from '../../components/navigation-component/navigation-component';
+import { LogotypeComponent} from '../../components/logotype-component/logotype-component';
+import {NavigationComponent} from '../../components/navigation-component/navigation-component';
 import {useDocumentTitle} from '../../hooks/use-document-title';
+import {useForm, SubmitHandler} from 'react-hook-form';
+import {loginAction} from '../../services/thunk/login-actions';
+import { useAppDispatch } from '../../hooks/use-store';
 
 type LoginPagesProps = {
   title: string;
-}
+};
 
-function LoginPages ({title} : LoginPagesProps) {
+type FormData = {
+  email: string;
+  password: string;
+};
 
+function LoginPages({ title }: LoginPagesProps) {
   useDocumentTitle(title);
+  const dispatch = useAppDispatch();
 
-  return(
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+
+    console.log(data);
+    dispatch(loginAction({login: data.email, password: data.password}));
+  };
+
+  return (
     <div className="wrapper">
       <header className="header">
         <div className="container container--size-l">
-
-          <LogotypeComponent/>
-
-          <NavigationComponent/>
-
+          <LogotypeComponent />
+          <NavigationComponent />
           <div className="header__side-nav">
             <a
               className="link header__side-item header__phone-link"
@@ -48,12 +65,15 @@ function LoginPages ({title} : LoginPagesProps) {
         <div className="container container--size-l">
           <div className="login__form">
             <form
-              className="login-form"
               action="https://echo.htmlacademy.ru/"
               method="post"
+              className="login-form"
+              onSubmit={handleSubmit(onSubmit)}
             >
               <div className="login-form__inner-wrapper">
-                <h1 className="title title--size-s login-form__title">Вход</h1>
+                <h1 className="title title--size-s login-form__title">
+                  Вход
+                </h1>
                 <div className="login-form__inputs">
                   <div className="custom-input login-form__input">
                     <label className="custom-input__label" htmlFor="email">
@@ -62,10 +82,18 @@ function LoginPages ({title} : LoginPagesProps) {
                     <input
                       type="email"
                       id="email"
-                      name="email"
                       placeholder="Адрес электронной почты"
-                      required="required"
+                      {...register('email', {
+                        required: 'Адрес электронной почты обязателен',
+                        pattern: {
+                          value: /\S+@\S+\.\S+/,
+                          message: 'Введите корректный адрес электронной почты',
+                        },
+                      })}
                     />
+                    {errors.email && (
+                      <span className="error">{errors.email.message}</span>
+                    )}
                   </div>
                   <div className="custom-input login-form__input">
                     <label className="custom-input__label" htmlFor="password">
@@ -74,10 +102,19 @@ function LoginPages ({title} : LoginPagesProps) {
                     <input
                       type="password"
                       id="password"
-                      name="password"
                       placeholder="Пароль"
-                      required="required"
+                      {...register('password', {
+                        required: 'Пароль обязателен',
+                        pattern: {
+                          value: /^(?=.*[A-Za-z])(?=.*\d).{3,15}$/,
+                          message:
+                            'Пароль должен содержать минимум одну букву и одну цифру, от 3 до 15 символов',
+                        },
+                      })}
                     />
+                    {errors.password && (
+                      <span className="error">{errors.password.message}</span>
+                    )}
                   </div>
                 </div>
                 <button
@@ -101,7 +138,10 @@ function LoginPages ({title} : LoginPagesProps) {
                 </span>
                 <span className="custom-checkbox__label">
                   Я&nbsp;согласен с
-                  <a className="link link--active-silver link--underlined" href="#">
+                  <a
+                    className="link link--active-silver link--underlined"
+                    href="#"
+                  >
                     правилами обработки персональных данных
                   </a>
                   &nbsp;и пользовательским соглашением

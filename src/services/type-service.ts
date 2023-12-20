@@ -17,4 +17,15 @@ type User = {
   token: string;
 };
 
-export type {Token, Thunk, User};
+type UserDataLogin = {
+  id: number;
+  email: string;
+  token: string;
+};
+
+type AuthData = {
+  login: string;
+  password: string;
+};
+
+export type {Token, Thunk, User, UserDataLogin, AuthData};
