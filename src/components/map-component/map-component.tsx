@@ -47,7 +47,7 @@ function MapComponent({offers}: MapComponentProps) {
       zoom={10}
       scrollWheelZoom={false}
       id="map"
-      style={{ height: '530px', width: '890px' }}
+      style={{ height: '100%', width: '100%' }}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'

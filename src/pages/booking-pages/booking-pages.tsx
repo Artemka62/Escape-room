@@ -11,6 +11,7 @@ import { ButtonTimeBookingComponent } from '../../components/button-time-booking
 import { bookingQuestSlice } from '../../store/slices/bookink-quest-slice';
 import { LoadingComponent } from '../../components/loading-component/loading-component';
 import { Day } from '../../const';
+import { AddressComponent } from '../../components/address-component/address-component';
 
 type BookingPagesProps = {
   title: string;
@@ -19,13 +20,10 @@ type BookingPagesProps = {
 function BookingPages ({title}: BookingPagesProps) {
   const {id} = useParams<string>();
   const isLoading = useAppSelector((state) => state.bookingQuest.isLoading);
-
   useDocumentTitle(title);
   const quests = useAppSelector((state)=> state.bookingQuest.quest);
   const dispatch = useAppDispatch();
-
   const stateIdBookingQuest = useAppSelector((state)=> state.bookingQuest.id);
-
   const findDataQuest = quests?.find((quest)=> quest.id === stateIdBookingQuest);
 
   console.log(findDataQuest)
@@ -80,10 +78,7 @@ function BookingPages ({title}: BookingPagesProps) {
 
                 </div>
               </div>
-              <p className="booking-map__address">
-                Вы&nbsp;выбрали: наб. реки Карповки&nbsp;5, лит&nbsp;П, м.
-                Петроградская
-              </p>
+              <AddressComponent address={findDataQuest?.location.address || ''}/>
             </div>
           </div>
           <form
@@ -105,7 +100,6 @@ function BookingPages ({title}: BookingPagesProps) {
               <fieldset className="booking-form__date-section">
                 <legend className="booking-form__date-title">Завтра</legend>
                 <div className="booking-form__date-inner-wrapper">
-
 
                   {findDataQuest?.slots.tomorrow.map((data) => <ButtonTimeBookingComponent key={data.time} data={data} day={Day.Tomorrow}/>)}
 
