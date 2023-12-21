@@ -5,10 +5,12 @@ import { BookingQuest } from '../type-store';
 
 type StateZBookingQuest ={
   quest: BookingQuest[] | null;
+  isLoading: boolean;
 }
 
 const initialState: StateZBookingQuest = {
-  quest: null
+  quest: null,
+  isLoading: false
 };
 
 const bookingQuestSlice = createSlice({
@@ -19,6 +21,11 @@ const bookingQuestSlice = createSlice({
     builder
       .addCase(getBookQuest.fulfilled, (state, action: PayloadAction<BookingQuest[]>) => {
         state.quest = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getBookQuest.pending, (state) => {
+        state.isLoading = true;
+
       });
   }
 });

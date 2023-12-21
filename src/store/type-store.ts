@@ -48,7 +48,7 @@ type BookingQuest = {
   id: string;
   location: {
     address: string;
-    coords: number[];
+    coords: [number,number];
     };
   slots: {
     today: [

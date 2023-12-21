@@ -1,25 +1,37 @@
-import {MapContainer, Marker, TileLayer, useMap} from 'react-leaflet';
-import { useAppSelector } from '../../hooks/use-store';
-import { BookingQuest } from '../../store/type-store';
-
+import {MapContainer, Marker, TileLayer} from 'react-leaflet';
+import {useAppSelector} from '../../hooks/use-store';
+import {BookingQuest} from '../../store/type-store';
+import {LoadingComponent} from '../loading-component/loading-component';
+import {AppRoute, DEFAULT_NULL} from '../../const';
+import {useNavigate} from 'react-router-dom';
 
 type MapComponentProps = {
   offers: BookingQuest[];
 }
 
 function MapComponent ({offers}: MapComponentProps) {
-  const stateQuests = useAppSelector((state) => state.bookingQuest.quest);
-  //const firstCord = stateQuests[0];
+  const isLoading = useAppSelector((state) => state.bookingQuest.isLoading);
 
-console.log(stateQuests);
+  const navigate = useNavigate();
+
+
+  function handleMarkerClick (id: string) {
+    console.log(id);
+
+    //navigate(`${AppRoute.Quest}/${id}${AppRoute.Booking}`);
+  }
+
+  if(isLoading){
+    return <LoadingComponent/>;
+  }
+
   return (
-    <MapContainer center={offers[0]?.location.coords} zoom={13} scrollWheelZoom={false} id="map" style={{'height' : '530px' , 'width' : '890px'}}>
+    <MapContainer center={offers[DEFAULT_NULL]?.location.coords} zoom={11} scrollWheelZoom={false} id="map" style={{'height' : '530px' , 'width' : '890px'}}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-
-      {offers?.map((quest) => <Marker key={quest.id} position={quest.location.coords}/>)}
+      {offers?.map((quest) => <Marker key={quest.id} position={quest.location.coords} eventHandlers={{ click: () => handleMarkerClick(quest.id) }}/>)}
     </MapContainer>
   );
 }

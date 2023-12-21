@@ -1,6 +1,7 @@
 const AUTH_TOKEN_KEY_NAME = 'escape-room-token';
 const URL_SERVER = 'https://grading.design.htmlacademy.pro/v1/escape-room';
 const REQUEST_TIMEOUT = 5000;
+const DEFAULT_NULL = 0;
 
 enum AppRoute {
   Main= '/',
@@ -77,6 +78,7 @@ export {
   AUTH_TOKEN_KEY_NAME,
   URL_SERVER,
   REQUEST_TIMEOUT,
+  DEFAULT_NULL,
   AppRoute,
   TitleDescription,
   ApiRoute,
