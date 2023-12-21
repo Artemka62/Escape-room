@@ -43,6 +43,11 @@ type kzff = {
   placeId: string;
 }
 
+type BookingTimeToday ={
+    time: string;
+    isAvailable: boolean;
+};
+
 
 type BookingQuest = {
   id: string;
@@ -51,12 +56,7 @@ type BookingQuest = {
     coords: [number,number];
     };
   slots: {
-    today: [
-      {
-        time: string;
-        isAvailable: boolean;
-      }
-    ];
+    today: [BookingTimeToday];
     tomorrow: [
       {
         time: string;
@@ -66,4 +66,5 @@ type BookingQuest = {
   };
 }
 
-export type {State, AppDispatch, StateAuth, QuestCard, QuestPageCard, BookingQuest};
+
+export type {State, AppDispatch, StateAuth, QuestCard, QuestPageCard, BookingQuest, BookingTimeToday};

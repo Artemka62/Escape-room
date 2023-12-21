@@ -1,10 +1,11 @@
 import {MapContainer, Marker, TileLayer} from 'react-leaflet';
-import {useAppSelector} from '../../hooks/use-store';
+import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import {BookingQuest} from '../../store/type-store';
 import {LoadingComponent} from '../loading-component/loading-component';
 import {DEFAULT_NULL} from '../../const';
 import {useEffect, useState} from 'react';
 import * as L from 'leaflet';
+import { bookingQuestSlice } from '../../store/slices/bookink-quest-slice';
 
 type MapComponentProps = {
   offers: BookingQuest[];
@@ -13,6 +14,7 @@ type MapComponentProps = {
 function MapComponent({offers}: MapComponentProps) {
   const isLoading = useAppSelector((state) => state.bookingQuest.isLoading);
   const [selectedMarker, setSelectedMarker] = useState<string>(offers[DEFAULT_NULL]?.id);
+  const dispatch = useAppDispatch();
 
   const activeIcon = new L.Icon({
     iconUrl: 'img/svg/pin-active.svg',
@@ -32,6 +34,7 @@ function MapComponent({offers}: MapComponentProps) {
 
   function handleMarkerClick(id: string) {
     setSelectedMarker(id);
+    dispatch(bookingQuestSlice.actions.idBookingQuest(id));
   }
 
   if (isLoading) {

@@ -73,6 +73,11 @@ const Person = {
   Max: 1
 } as const;
 
+const Day = {
+  Today: 'today',
+  Tomorrow: 'tomorrow'
+} as const;
+
 
 export {
   AUTH_TOKEN_KEY_NAME,
@@ -87,5 +92,6 @@ export {
   LevelQuestRu,
   FilterLevel,
   Person,
-  GenreQuestRu
+  GenreQuestRu,
+  Day
 };

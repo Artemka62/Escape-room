@@ -6,26 +6,32 @@ import { BookingQuest } from '../type-store';
 type StateZBookingQuest ={
   quest: BookingQuest[] | null;
   isLoading: boolean;
+  id: string;
 }
 
 const initialState: StateZBookingQuest = {
   quest: null,
-  isLoading: false
+  isLoading: false,
+  id: ''
 };
 
 const bookingQuestSlice = createSlice({
   name: 'bookingQuest',
   initialState,
-  reducers: {},
+  reducers: {
+    idBookingQuest(state, action: PayloadAction<string>) {
+      state.id = action.payload;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(getBookQuest.fulfilled, (state, action: PayloadAction<BookingQuest[]>) => {
         state.quest = action.payload;
         state.isLoading = false;
+        state.id = action.payload[0].id;
       })
       .addCase(getBookQuest.pending, (state) => {
         state.isLoading = true;
-
       });
   }
 });

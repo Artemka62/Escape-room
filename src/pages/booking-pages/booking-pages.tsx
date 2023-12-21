@@ -7,6 +7,10 @@ import {useDocumentTitle} from '../../hooks/use-document-title';
 import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import { getBookQuest } from '../../services/thunk/get-booking-quest';
 import { useParams } from 'react-router-dom';
+import { ButtonTimeBookingComponent } from '../../components/button-time-booking-component/button-time-booking-component';
+import { bookingQuestSlice } from '../../store/slices/bookink-quest-slice';
+import { LoadingComponent } from '../../components/loading-component/loading-component';
+import { Day } from '../../const';
 
 type BookingPagesProps = {
   title: string;
@@ -14,15 +18,22 @@ type BookingPagesProps = {
 
 function BookingPages ({title}: BookingPagesProps) {
   const {id} = useParams<string>();
-
+  const isLoading = useAppSelector((state) => state.bookingQuest.isLoading);
 
   useDocumentTitle(title);
-  const quest = useAppSelector((state)=> state.bookingQuest.quest);
+  const quests = useAppSelector((state)=> state.bookingQuest.quest);
   const dispatch = useAppDispatch();
+
+  const stateIdBookingQuest = useAppSelector((state)=> state.bookingQuest.id);
+
+  const findDataQuest = quests?.find((quest)=> quest.id === stateIdBookingQuest);
+
+  console.log(findDataQuest)
 
   useEffect(() => {
     dispatch(getBookQuest(id || ''));
   }, []);
+
 
   return (
     <div className="wrapper">
@@ -65,7 +76,7 @@ function BookingPages ({title}: BookingPagesProps) {
               <div className="map">
                 <div className="map__container">
 
-                  <MapComponent offers={quest || []}/>
+                  <MapComponent offers={quests || []}/>
 
                 </div>
               </div>
@@ -85,115 +96,19 @@ function BookingPages ({title}: BookingPagesProps) {
               <fieldset className="booking-form__date-section">
                 <legend className="booking-form__date-title">Сегодня</legend>
                 <div className="booking-form__date-inner-wrapper">
-                  <label className="custom-radio booking-form__date">
-                    <input
-                      type="radio"
-                      id="today9h45m"
-                      name="date"
-                      required="required"
-                      defaultValue="today9h45m"
-                    />
-                    <span className="custom-radio__label">9:45</span>
-                  </label>
-                  <label className="custom-radio booking-form__date">
-                    <input
-                      type="radio"
-                      id="today15h00m"
-                      name="date"
-                      defaultChecked=""
-                      required="required"
-                      defaultValue="today15h00m"
-                    />
-                    <span className="custom-radio__label">15:00</span>
-                  </label>
-                  <label className="custom-radio booking-form__date">
-                    <input
-                      type="radio"
-                      id="today17h30m"
-                      name="date"
-                      required="required"
-                      defaultValue="today17h30m"
-                    />
-                    <span className="custom-radio__label">17:30</span>
-                  </label>
-                  <label className="custom-radio booking-form__date">
-                    <input
-                      type="radio"
-                      id="today19h30m"
-                      name="date"
-                      required="required"
-                      defaultValue="today19h30m"
-                      disabled=""
-                    />
-                    <span className="custom-radio__label">19:30</span>
-                  </label>
-                  <label className="custom-radio booking-form__date">
-                    <input
-                      type="radio"
-                      id="today21h30m"
-                      name="date"
-                      required="required"
-                      defaultValue="today21h30m"
-                    />
-                    <span className="custom-radio__label">21:30</span>
-                  </label>
+
+
+                  {findDataQuest?.slots.today.map((data) => <ButtonTimeBookingComponent key={data.time} data={data} day={Day.Today}/>)}
+
                 </div>
               </fieldset>
               <fieldset className="booking-form__date-section">
                 <legend className="booking-form__date-title">Завтра</legend>
                 <div className="booking-form__date-inner-wrapper">
-                  <label className="custom-radio booking-form__date">
-                    <input
-                      type="radio"
-                      id="tomorrow11h00m"
-                      name="date"
-                      required="required"
-                      defaultValue="tomorrow11h00m"
-                    />
-                    <span className="custom-radio__label">11:00</span>
-                  </label>
-                  <label className="custom-radio booking-form__date">
-                    <input
-                      type="radio"
-                      id="tomorrow15h00m"
-                      name="date"
-                      required="required"
-                      defaultValue="tomorrow15h00m"
-                      disabled=""
-                    />
-                    <span className="custom-radio__label">15:00</span>
-                  </label>
-                  <label className="custom-radio booking-form__date">
-                    <input
-                      type="radio"
-                      id="tomorrow17h30m"
-                      name="date"
-                      required="required"
-                      defaultValue="tomorrow17h30m"
-                      disabled=""
-                    />
-                    <span className="custom-radio__label">17:30</span>
-                  </label>
-                  <label className="custom-radio booking-form__date">
-                    <input
-                      type="radio"
-                      id="tomorrow19h45m"
-                      name="date"
-                      required="required"
-                      defaultValue="tomorrow19h45m"
-                    />
-                    <span className="custom-radio__label">19:45</span>
-                  </label>
-                  <label className="custom-radio booking-form__date">
-                    <input
-                      type="radio"
-                      id="tomorrow21h30m"
-                      name="date"
-                      required="required"
-                      defaultValue="tomorrow21h30m"
-                    />
-                    <span className="custom-radio__label">21:30</span>
-                  </label>
+
+
+                  {findDataQuest?.slots.tomorrow.map((data) => <ButtonTimeBookingComponent key={data.time} data={data} day={Day.Tomorrow}/>)}
+
                 </div>
               </fieldset>
             </fieldset>

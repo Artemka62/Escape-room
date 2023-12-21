@@ -30,4 +30,11 @@ function setGenre (genre: string) {
   }
 }
 
-export {setLevel, setGenre};
+function formatTime (timeString: string): string {
+  const [hours, minutes] = timeString.split(':').map(Number);
+  const formattedHours = hours < 10 ? `0${hours}` : hours;
+  const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+  return `${formattedHours}h${formattedMinutes}m`;
+}
+
+export {setLevel, setGenre, formatTime};
