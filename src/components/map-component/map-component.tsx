@@ -2,38 +2,64 @@ import {MapContainer, Marker, TileLayer} from 'react-leaflet';
 import {useAppSelector} from '../../hooks/use-store';
 import {BookingQuest} from '../../store/type-store';
 import {LoadingComponent} from '../loading-component/loading-component';
-import {AppRoute, DEFAULT_NULL} from '../../const';
-import {useNavigate} from 'react-router-dom';
+import {DEFAULT_NULL} from '../../const';
+import {useEffect, useState} from 'react';
+import * as L from 'leaflet';
 
 type MapComponentProps = {
   offers: BookingQuest[];
-}
+};
 
-function MapComponent ({offers}: MapComponentProps) {
+function MapComponent({offers}: MapComponentProps) {
   const isLoading = useAppSelector((state) => state.bookingQuest.isLoading);
+  const [selectedMarker, setSelectedMarker] = useState<string>(offers[DEFAULT_NULL]?.id);
 
-  const navigate = useNavigate();
+  const activeIcon = new L.Icon({
+    iconUrl: 'img/svg/pin-active.svg',
+    iconSize: [23, 42],
+    iconAnchor: [11.5, 42],
+  });
 
+  const defaultIcon = new L.Icon({
+    iconUrl: 'img/svg/pin-default.svg',
+    iconSize: [23, 42],
+    iconAnchor: [11.5, 42],
+  });
 
-  function handleMarkerClick (id: string) {
-    console.log(id);
+  useEffect(()=>{
+    setSelectedMarker(offers[DEFAULT_NULL]?.id);
+  },[isLoading]);
 
-    //navigate(`${AppRoute.Quest}/${id}${AppRoute.Booking}`);
+  function handleMarkerClick(id: string) {
+    setSelectedMarker(id);
   }
 
-  if(isLoading){
-    return <LoadingComponent/>;
+  if (isLoading) {
+    return <LoadingComponent />;
   }
 
   return (
-    <MapContainer center={offers[DEFAULT_NULL]?.location.coords} zoom={11} scrollWheelZoom={false} id="map" style={{'height' : '530px' , 'width' : '890px'}}>
+    <MapContainer
+      center={offers[DEFAULT_NULL]?.location.coords}
+      zoom={10}
+      scrollWheelZoom={false}
+      id="map"
+      style={{ height: '530px', width: '890px' }}
+    >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
       />
-      {offers?.map((quest) => <Marker key={quest.id} position={quest.location.coords} eventHandlers={{ click: () => handleMarkerClick(quest.id) }}/>)}
+      {offers?.map((quest) => (
+        <Marker
+          key={quest.id}
+          position={quest.location.coords}
+          eventHandlers={{ click: () => handleMarkerClick(quest.id) }}
+          icon={selectedMarker === quest.id ? activeIcon : defaultIcon}
+        />
+      ))}
     </MapContainer>
   );
 }
 
-export {MapComponent};
+export { MapComponent };

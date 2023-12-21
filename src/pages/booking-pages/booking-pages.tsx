@@ -30,11 +30,8 @@ function BookingPages ({title}: BookingPagesProps) {
         <div className="container container--size-l">
 
           <LogotypeComponent/>
-
           <NavigationComponent/>
-
           <ProfileComponent/>
-
 
         </div>
       </header>
