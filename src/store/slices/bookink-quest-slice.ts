@@ -1,6 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import {getBookQuest} from '../../services/thunk/get-booking-quest';
 import { BookingQuest, DataBooking } from '../type-store';
+import { sendDataBooking } from '../../services/thunk/send-data-booking';
+import { ResponseDataBooking } from '../../services/type-service';
 
 
 type StateZBookingQuest ={
@@ -8,6 +10,8 @@ type StateZBookingQuest ={
   isLoading: boolean;
   id: string;
   data: DataBooking | null;
+  isLoadingDataBooking: boolean;
+  dataQuestBooking: ResponseDataBooking | null;
 }
 
 const initialState: StateZBookingQuest = {
@@ -15,6 +19,8 @@ const initialState: StateZBookingQuest = {
   isLoading: false,
   id: '',
   data: null,
+  isLoadingDataBooking: false,
+  dataQuestBooking: null
 };
 
 const bookingQuestSlice = createSlice({
@@ -37,6 +43,13 @@ const bookingQuestSlice = createSlice({
       })
       .addCase(getBookQuest.pending, (state) => {
         state.isLoading = true;
+      })
+      .addCase(sendDataBooking.fulfilled, (state, action: PayloadAction<ResponseDataBooking>) => {
+        state.dataQuestBooking = action.payload;
+        state.isLoadingDataBooking = false;
+      })
+      .addCase(sendDataBooking.pending, (state) => {
+        state.isLoadingDataBooking = true;
       });
   }
 });

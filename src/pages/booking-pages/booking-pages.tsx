@@ -6,9 +6,9 @@ import {ProfileComponent} from '../../components/profile-component/profile-compo
 import {useDocumentTitle} from '../../hooks/use-document-title';
 import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import {getBookQuest} from '../../services/thunk/get-booking-quest';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {ButtonTimeBookingComponent} from '../../components/button-time-booking-component/button-time-booking-component';
-import {Day} from '../../const';
+import {AppRoute, Day} from '../../const';
 import {AddressComponent } from '../../components/address-component/address-component';
 import {useForm} from 'react-hook-form';
 import type {SubmitHandler} from 'react-hook-form';
@@ -34,6 +34,7 @@ function BookingPages ({title}: BookingPagesProps) {
   const findDataQuest = questsNear?.find((quest)=> quest.id === stateIdBookingQuestId);
   const quest = useAppSelector((state)=> state.quest.quest);
   const stateTimeBooking = useAppSelector((state)=> state.bookingQuest.data);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getBookQuest(id || ''));
@@ -65,7 +66,9 @@ function BookingPages ({title}: BookingPagesProps) {
       peopleCount: +data.people,
       placeId: stateIdBookingQuestId
     };
-    dispatch(sendDataBooking(allDataBooking));
+    dispatch(sendDataBooking(allDataBooking)).unwrap().then(() => {
+      navigate(AppRoute.MyQuest);
+    });
   };
 
   const validateNumberOfParticipants = (value:string) => {
