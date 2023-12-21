@@ -4,7 +4,7 @@ import { BookingQuest } from '../type-store';
 
 
 type StateZBookingQuest ={
-  quest: BookingQuest | null;
+  quest: BookingQuest[] | null;
 }
 
 const initialState: StateZBookingQuest = {
@@ -17,7 +17,7 @@ const bookingQuestSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(getBookQuest.fulfilled, (state, action: PayloadAction<BookingQuest>) => {
+      .addCase(getBookQuest.fulfilled, (state, action: PayloadAction<BookingQuest[]>) => {
         state.quest = action.payload;
       });
   }

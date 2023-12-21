@@ -33,7 +33,7 @@ type QuestPageCard = {
   coverImgWebp: string;
 }
 
-type BookingQuest = {
+type kzff = {
   date: string;
   time: string;
   contactPerson: string;
@@ -43,5 +43,27 @@ type BookingQuest = {
   placeId: string;
 }
 
+
+type BookingQuest = {
+  id: string;
+  location: {
+    address: string;
+    coords: number[];
+    };
+  slots: {
+    today: [
+      {
+        time: string;
+        isAvailable: boolean;
+      }
+    ];
+    tomorrow: [
+      {
+        time: string;
+        isAvailable: boolean;
+      }
+    ];
+  };
+}
 
 export type {State, AppDispatch, StateAuth, QuestCard, QuestPageCard, BookingQuest};

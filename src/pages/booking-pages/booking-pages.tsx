@@ -1,15 +1,28 @@
+import { useEffect } from 'react';
 import {LogotypeComponent} from '../../components/logotype-component/logotype-component';
-import { NavigationComponent } from '../../components/navigation-component/navigation-component';
-import { ProfileComponent } from '../../components/profile-component/profile-component';
+import {MapComponent} from '../../components/map-component/map-component';
+import {NavigationComponent} from '../../components/navigation-component/navigation-component';
+import {ProfileComponent} from '../../components/profile-component/profile-component';
 import {useDocumentTitle} from '../../hooks/use-document-title';
+import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
+import { getBookQuest } from '../../services/thunk/get-booking-quest';
+import { useParams } from 'react-router-dom';
 
 type BookingPagesProps = {
   title: string;
 }
 
 function BookingPages ({title}: BookingPagesProps) {
+  const {id} = useParams<string>();
+
 
   useDocumentTitle(title);
+  const quest = useAppSelector((state)=> state.bookingQuest.quest);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getBookQuest(id || ''));
+  }, []);
 
   return (
     <div className="wrapper">
@@ -53,7 +66,11 @@ function BookingPages ({title}: BookingPagesProps) {
           <div className="page-content__item">
             <div className="booking-map">
               <div className="map">
-                <div className="map__container" />
+                <div className="map__container">
+
+                  <MapComponent offers={quest || []}/>
+
+                </div>
               </div>
               <p className="booking-map__address">
                 Вы&nbsp;выбрали: наб. реки Карповки&nbsp;5, лит&nbsp;П, м.
