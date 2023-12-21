@@ -1,18 +1,20 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import {getBookQuest} from '../../services/thunk/get-booking-quest';
-import { BookingQuest } from '../type-store';
+import { BookingQuest, DataBooking } from '../type-store';
 
 
 type StateZBookingQuest ={
   quest: BookingQuest[] | null;
   isLoading: boolean;
   id: string;
+  data: DataBooking | null;
 }
 
 const initialState: StateZBookingQuest = {
   quest: null,
   isLoading: false,
-  id: ''
+  id: '',
+  data: null,
 };
 
 const bookingQuestSlice = createSlice({
@@ -21,7 +23,10 @@ const bookingQuestSlice = createSlice({
   reducers: {
     idBookingQuest(state, action: PayloadAction<string>) {
       state.id = action.payload;
-    }
+    },
+    dataBooking(state, action: PayloadAction<DataBooking>) {
+      state.data = action.payload;
+    },
   },
   extraReducers(builder) {
     builder

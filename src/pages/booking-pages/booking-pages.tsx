@@ -1,72 +1,80 @@
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 import {LogotypeComponent} from '../../components/logotype-component/logotype-component';
 import {MapComponent} from '../../components/map-component/map-component';
 import {NavigationComponent} from '../../components/navigation-component/navigation-component';
 import {ProfileComponent} from '../../components/profile-component/profile-component';
 import {useDocumentTitle} from '../../hooks/use-document-title';
 import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
-import { getBookQuest } from '../../services/thunk/get-booking-quest';
-import { useParams } from 'react-router-dom';
-import { ButtonTimeBookingComponent } from '../../components/button-time-booking-component/button-time-booking-component';
-import { bookingQuestSlice } from '../../store/slices/bookink-quest-slice';
-import { LoadingComponent } from '../../components/loading-component/loading-component';
-import { Day } from '../../const';
-import { AddressComponent } from '../../components/address-component/address-component';
-import { useForm } from 'react-hook-form';
-import type { SubmitHandler } from 'react-hook-form';
-import { fetchQuestAction } from '../../services/thunk/fetch-quest';
+import {getBookQuest} from '../../services/thunk/get-booking-quest';
+import {useParams} from 'react-router-dom';
+import {ButtonTimeBookingComponent} from '../../components/button-time-booking-component/button-time-booking-component';
+import {Day} from '../../const';
+import {AddressComponent } from '../../components/address-component/address-component';
+import {useForm} from 'react-hook-form';
+import type {SubmitHandler} from 'react-hook-form';
+import {fetchQuestAction} from '../../services/thunk/fetch-quest';
+import { sendDataBooking } from '../../services/thunk/send-data-booking';
 
 type BookingPagesProps = {
   title: string;
 }
 
-
 type FormData = {
   name: string;
   tel: string;
   people: string;
+  children: boolean;
 };
-
-
-
 
 function BookingPages ({title}: BookingPagesProps) {
   const {id} = useParams<string>();
-  const isLoading = useAppSelector((state) => state.bookingQuest.isLoading);
-  useDocumentTitle(title);
   const questsNear = useAppSelector((state)=> state.bookingQuest.quest);
   const dispatch = useAppDispatch();
-  const stateIdBookingQuest = useAppSelector((state)=> state.bookingQuest.id);
-  const findDataQuest = questsNear?.find((quest)=> quest.id === stateIdBookingQuest);
+  const stateIdBookingQuestId = useAppSelector((state)=> state.bookingQuest.id);
+  const findDataQuest = questsNear?.find((quest)=> quest.id === stateIdBookingQuestId);
   const quest = useAppSelector((state)=> state.quest.quest);
+  const stateTimeBooking = useAppSelector((state)=> state.bookingQuest.data);
 
   useEffect(() => {
     dispatch(getBookQuest(id || ''));
     dispatch(fetchQuestAction(id || ''));
   }, []);
 
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
-
+  } = useForm<FormData>({
+    defaultValues: {
+      name: '',
+      tel: '',
+      people: '',
+      children: true,
+    },
+  });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
+
+    const allDataBooking = {
+      questId: id || '',
+      date: stateTimeBooking?.day || '',
+      time: stateTimeBooking?.time.toString() || '',
+      contactPerson: data.name,
+      phone: data.people,
+      withChildren: data.children,
+      peopleCount: +data.people,
+      placeId: stateIdBookingQuestId
+    };
+    dispatch(sendDataBooking(allDataBooking));
   };
 
-
-
-
   const validateNumberOfParticipants = (value:string) => {
+    const minParticipants = quest?.peopleMinMax[0];
+    const maxParticipants = quest?.peopleMinMax[1];
+
     if (!value) {
       return 'Количество участников обязательно';
     }
-
-    const minParticipants = quest?.peopleMinMax[0];
-    const maxParticipants = quest?.peopleMinMax[1];
 
     if (minParticipants && +value < minParticipants) {
       return `Выберите как минимум ${minParticipants} участника(ов)`;
@@ -79,11 +87,7 @@ function BookingPages ({title}: BookingPagesProps) {
     return true;
   };
 
-
-
-
-
-
+  useDocumentTitle(title);
 
   return (
     <div className="wrapper">
@@ -234,8 +238,8 @@ function BookingPages ({title}: BookingPagesProps) {
                 <input
                   type="checkbox"
                   id="children"
-                  name="children"
-                  defaultChecked=""
+                  {...register('children')}
+                  defaultChecked
                 />
                 <span className="custom-checkbox__icon">
                   <svg width={20} height={17} aria-hidden="true">
@@ -258,7 +262,7 @@ function BookingPages ({title}: BookingPagesProps) {
                 type="checkbox"
                 id="id-order-agreement"
                 name="user-agreement"
-                required=""
+                required
               />
               <span className="custom-checkbox__icon">
                 <svg width={20} height={17} aria-hidden="true">

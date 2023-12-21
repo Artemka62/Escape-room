@@ -66,5 +66,10 @@ type BookingQuest = {
   };
 }
 
+type DataBooking = {
+  time: string;
+  day: string;
+};
 
-export type {State, AppDispatch, StateAuth, QuestCard, QuestPageCard, BookingQuest, BookingTimeToday};
+
+export type {State, AppDispatch, StateAuth, QuestCard, QuestPageCard, BookingQuest, BookingTimeToday, DataBooking};
