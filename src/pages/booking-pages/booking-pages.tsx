@@ -12,25 +12,77 @@ import { bookingQuestSlice } from '../../store/slices/bookink-quest-slice';
 import { LoadingComponent } from '../../components/loading-component/loading-component';
 import { Day } from '../../const';
 import { AddressComponent } from '../../components/address-component/address-component';
+import { useForm } from 'react-hook-form';
+import type { SubmitHandler } from 'react-hook-form';
+import { fetchQuestAction } from '../../services/thunk/fetch-quest';
 
 type BookingPagesProps = {
   title: string;
 }
 
+
+type FormData = {
+  name: string;
+  tel: string;
+  people: string;
+};
+
+
+
+
 function BookingPages ({title}: BookingPagesProps) {
   const {id} = useParams<string>();
   const isLoading = useAppSelector((state) => state.bookingQuest.isLoading);
   useDocumentTitle(title);
-  const quests = useAppSelector((state)=> state.bookingQuest.quest);
+  const questsNear = useAppSelector((state)=> state.bookingQuest.quest);
   const dispatch = useAppDispatch();
   const stateIdBookingQuest = useAppSelector((state)=> state.bookingQuest.id);
-  const findDataQuest = quests?.find((quest)=> quest.id === stateIdBookingQuest);
-
-  console.log(findDataQuest)
+  const findDataQuest = questsNear?.find((quest)=> quest.id === stateIdBookingQuest);
+  const quest = useAppSelector((state)=> state.quest.quest);
 
   useEffect(() => {
     dispatch(getBookQuest(id || ''));
+    dispatch(fetchQuestAction(id || ''));
   }, []);
+
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
+
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    console.log(data);
+  };
+
+
+
+
+  const validateNumberOfParticipants = (value:string) => {
+    if (!value) {
+      return 'Количество участников обязательно';
+    }
+
+    const minParticipants = quest?.peopleMinMax[0];
+    const maxParticipants = quest?.peopleMinMax[1];
+
+    if (minParticipants && +value < minParticipants) {
+      return `Выберите как минимум ${minParticipants} участника(ов)`;
+    }
+
+    if (maxParticipants && +value > maxParticipants) {
+      return `Выберите не более ${maxParticipants} участника(ов)`;
+    }
+
+    return true;
+  };
+
+
+
+
+
 
 
   return (
@@ -74,7 +126,7 @@ function BookingPages ({title}: BookingPagesProps) {
               <div className="map">
                 <div className="map__container">
 
-                  <MapComponent offers={quests || []}/>
+                  <MapComponent offers={questsNear || []}/>
 
                 </div>
               </div>
@@ -85,6 +137,7 @@ function BookingPages ({title}: BookingPagesProps) {
             className="booking-form"
             action="https://echo.htmlacademy.ru/"
             method="post"
+            onSubmit={(event) =>void handleSubmit(onSubmit)(event)}
           >
             <fieldset className="booking-form__section">
               <legend className="visually-hidden">Выбор даты и времени</legend>
@@ -115,11 +168,27 @@ function BookingPages ({title}: BookingPagesProps) {
                 <input
                   type="text"
                   id="name"
-                  name="name"
                   placeholder="Имя"
-                  required="required"
-                  pattern="[А-Яа-яЁёA-Za-z'- ]{1,}"
+                  {...register('name', {
+                    required: 'Имя обязательно',
+                    minLength: {
+                      value: 1,
+                      message: 'Имя должно содержать как минимум 1 символ',
+                    },
+                    maxLength: {
+                      value: 15,
+                      message: 'Имя должно содержать не более 15 символов',
+                    },
+                    pattern: {
+                      value: /^[A-Za-zА-Яа-яЁё'\s-]+$/,
+                      message: 'Введите корректное имя',
+                    },
+                  })}
+                  aria-invalid={errors['name'] ? 'true' : 'false'}
                 />
+                {errors.name && (
+                  <span className="error">{errors.name.message}</span>
+                )}
               </div>
               <div className="custom-input booking-form__input">
                 <label className="custom-input__label" htmlFor="tel">
@@ -128,11 +197,19 @@ function BookingPages ({title}: BookingPagesProps) {
                 <input
                   type="tel"
                   id="tel"
-                  name="tel"
                   placeholder="Телефон"
-                  required="required"
-                  pattern="[0-9]{10,}"
+                  {...register('tel', {
+                    required: 'Телефон обязателен',
+                    pattern: {
+                      value: /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
+                      message: 'Введите телефон в формате +7 (000) 000-00-00 с пробелом перед началом скобки, и в конце скобки.',
+                    },
+                  })}
+                  aria-invalid={errors.tel ? 'true' : 'false'}
                 />
+                {errors.tel && (
+                  <span className="error">{errors.tel.message}</span>
+                )}
               </div>
               <div className="custom-input booking-form__input">
                 <label className="custom-input__label" htmlFor="person">
@@ -141,10 +218,17 @@ function BookingPages ({title}: BookingPagesProps) {
                 <input
                   type="number"
                   id="person"
-                  name="person"
                   placeholder="Количество участников"
-                  required="required"
+                  required
+                  {...register('people', { validate: validateNumberOfParticipants })}
+                  aria-invalid={errors.people ? 'true' : 'false'}
                 />
+                {errors.people && (
+                  <>
+                    <br />
+                    <span role="alert">{errors.people.message}</span>
+                  </>
+                )}
               </div>
               <label className="custom-checkbox booking-form__checkbox booking-form__checkbox--children">
                 <input
