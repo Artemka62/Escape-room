@@ -7,7 +7,6 @@ enum AppRoute {
   Main= '/',
   Booking = '/booking',
   Login = '/login',
-  Favorites = '/favorites',
   Quest = '/quest',
   MyQuest = '/my-quests',
   Contacts = '/contacts',
@@ -26,7 +25,7 @@ enum TitleDescription {
 
 enum ApiRoute {
   Quests = '/quest',
-  OffersFavorite = '/favorite',
+  Reservation = '/reservation',
   Booking = '/booking',
   Login = '/login',
   Logout = '/logout'

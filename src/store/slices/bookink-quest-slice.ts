@@ -4,7 +4,6 @@ import { BookingQuest, DataBooking } from '../type-store';
 import { sendDataBooking } from '../../services/thunk/send-data-booking';
 import { ResponseDataBooking } from '../../services/type-service';
 
-
 type StateZBookingQuest ={
   quest: BookingQuest[] | null;
   isLoading: boolean;
@@ -12,6 +11,7 @@ type StateZBookingQuest ={
   data: DataBooking | null;
   isLoadingDataBooking: boolean;
   dataQuestBooking: ResponseDataBooking | null;
+  error: boolean | string;
 }
 
 const initialState: StateZBookingQuest = {
@@ -20,7 +20,8 @@ const initialState: StateZBookingQuest = {
   id: '',
   data: null,
   isLoadingDataBooking: false,
-  dataQuestBooking: null
+  dataQuestBooking: null,
+  error: false
 };
 
 const bookingQuestSlice = createSlice({
@@ -33,6 +34,9 @@ const bookingQuestSlice = createSlice({
     dataBooking(state, action: PayloadAction<DataBooking>) {
       state.data = action.payload;
     },
+    errorBooking(state, action: PayloadAction<boolean>) {
+      state.error = action.payload;
+    }
   },
   extraReducers(builder) {
     builder
@@ -47,9 +51,14 @@ const bookingQuestSlice = createSlice({
       .addCase(sendDataBooking.fulfilled, (state, action: PayloadAction<ResponseDataBooking>) => {
         state.dataQuestBooking = action.payload;
         state.isLoadingDataBooking = false;
+        state.error = false;
       })
       .addCase(sendDataBooking.pending, (state) => {
         state.isLoadingDataBooking = true;
+        state.error = false;
+      })
+      .addCase(sendDataBooking.rejected, (state) => {
+        state.error = 'Произошла ошибка проверьте заполненные данные';
       });
   }
 });

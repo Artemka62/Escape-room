@@ -14,6 +14,7 @@ import {useForm} from 'react-hook-form';
 import type {SubmitHandler} from 'react-hook-form';
 import {fetchQuestAction} from '../../services/thunk/fetch-quest';
 import { sendDataBooking } from '../../services/thunk/send-data-booking';
+import { bookingQuestSlice } from '../../store/slices/bookink-quest-slice';
 
 type BookingPagesProps = {
   title: string;
@@ -35,10 +36,12 @@ function BookingPages ({title}: BookingPagesProps) {
   const quest = useAppSelector((state)=> state.quest.quest);
   const stateTimeBooking = useAppSelector((state)=> state.bookingQuest.data);
   const navigate = useNavigate();
+  const error = useAppSelector((state)=> state.bookingQuest.error);
 
   useEffect(() => {
     dispatch(getBookQuest(id || ''));
     dispatch(fetchQuestAction(id || ''));
+    dispatch(bookingQuestSlice.actions.errorBooking(false));
   }, []);
 
   const {
@@ -66,8 +69,11 @@ function BookingPages ({title}: BookingPagesProps) {
       peopleCount: +data.people,
       placeId: stateIdBookingQuestId
     };
+
+
     dispatch(sendDataBooking(allDataBooking)).unwrap().then(() => {
       navigate(AppRoute.MyQuest);
+      dispatch(bookingQuestSlice.actions.errorBooking(false));
     });
   };
 
@@ -254,12 +260,15 @@ function BookingPages ({title}: BookingPagesProps) {
                 </span>
               </label>
             </fieldset>
+            {error !== false ? <span>{error}</span> : ''}
             <button
               className="btn btn--accent btn--cta booking-form__submit"
               type="submit"
             >
               Забронировать
+
             </button>
+
             <label className="custom-checkbox booking-form__checkbox booking-form__checkbox--agreement">
               <input
                 type="checkbox"
