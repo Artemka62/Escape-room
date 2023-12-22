@@ -59,7 +59,7 @@ type ResponseDataBooking ={
       previewImgWebp: string;
       level: string;
       type: string;
-      peopleMinMax: [number, number];
+      peopleMinMax: [number, number] | [number];
   };
 }
 

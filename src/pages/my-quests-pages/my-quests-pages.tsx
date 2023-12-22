@@ -1,8 +1,11 @@
+import { useEffect } from 'react';
 import {BookingCardQuestComponent} from '../../components/booking-card-quest-component/booking-card-quest-component';
 import {LogotypeComponent} from '../../components/logotype-component/logotype-component';
 import {NavigationComponent} from '../../components/navigation-component/navigation-component';
 import {ProfileComponent} from '../../components/profile-component/profile-component';
 import {useDocumentTitle} from '../../hooks/use-document-title';
+import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
+import { getMyReservation } from '../../services/thunk/get-my-reservation';
 
 type MyQuestsPagesProps = {
   title: string;
@@ -11,6 +14,13 @@ type MyQuestsPagesProps = {
 function MyQuestsPages({title}: MyQuestsPagesProps) {
 
   useDocumentTitle(title);
+  const stateReservation = useAppSelector((state) => state.reservationQuests.quests);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getMyReservation());
+  },[]);
+
 
   return(
     <div className="wrapper">
@@ -47,7 +57,7 @@ function MyQuestsPages({title}: MyQuestsPagesProps) {
           </div>
           <div className="cards-grid">
 
-            <BookingCardQuestComponent/>
+            {stateReservation?.map((quest) => <BookingCardQuestComponent key={quest.id} quest={quest}/>)}
 
 
           </div>

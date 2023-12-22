@@ -1,4 +1,11 @@
-function BookingCardQuestComponent () {
+import {ResponseDataBooking} from '../../services/type-service';
+import { setLevel } from '../../utils';
+
+type BookingCardProps = {
+  quest: ResponseDataBooking;
+}
+
+function BookingCardQuestComponent ({quest}: BookingCardProps) {
 
   return (
     <div className="quest-card">
@@ -6,26 +13,24 @@ function BookingCardQuestComponent () {
         <picture>
           <source
             type="image/webp"
-            srcSet="img/content/maniac/maniac-size-s.webp, img/content/maniac/maniac-size-s@2x.webp 2x"
+            srcSet={`${quest.quest.previewImgWebp}, ${quest.quest.previewImgWebp} 2x`}
           />
           <img
-            src="img/content/maniac/maniac-size-s.jpg"
-            srcSet="img/content/maniac/maniac-size-s@2x.jpg 2x"
+            src={quest.quest.previewImg}
+            srcSet={`${quest.quest.previewImgWebp} 2x`}
             width={344}
             height={232}
-            alt="Мужчина в маске в тёмном переходе."
+            alt={quest.quest.title}
           />
         </picture>
       </div>
       <div className="quest-card__content">
         <div className="quest-card__info-wrapper">
           <a className="quest-card__link" href="quest.html">
-            Маньяк
+            {quest.quest.title}
           </a>
           <span className="quest-card__info">
-            [сегодня,&nbsp;17:00. наб. реки Карповки&nbsp;5, лит&nbsp;П
-            <br />
-            м. Петроградская]
+            {quest.location.address}
           </span>
         </div>
         <ul className="tags quest-card__tags">
@@ -33,13 +38,13 @@ function BookingCardQuestComponent () {
             <svg width={11} height={14} aria-hidden="true">
               <use xlinkHref="#icon-person" />
             </svg>
-            6&nbsp;чел
+            {quest.peopleCount} чел
           </li>
           <li className="tags__item">
             <svg width={14} height={14} aria-hidden="true">
               <use xlinkHref="#icon-level" />
             </svg>
-            Средний
+            {setLevel(quest.quest.level)}
           </li>
         </ul>
         <button

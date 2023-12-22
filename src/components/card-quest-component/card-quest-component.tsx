@@ -53,7 +53,7 @@ function CardQuestComponent ({quest}: QuestProps) {
           />
           <img
             src={quest.previewImg}
-            srcSet={quest.previewImgWebp}
+            srcSet={`${quest.previewImgWebp} 2x`}
             width={344}
             height={232}
             alt={quest.title}
