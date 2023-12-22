@@ -1,15 +1,20 @@
+
 import {LogotypeComponent} from '../../components/logotype-component/logotype-component';
 import {MapComponent} from '../../components/map-component/map-component';
 import {NavigationComponent} from '../../components/navigation-component/navigation-component';
 import {ProfileComponent} from '../../components/profile-component/profile-component';
 import {useDocumentTitle} from '../../hooks/use-document-title';
+
 import {mockPoint} from '../../mock/mock';
+
 
 type ContactsPagesProps = {
   title: string;
 }
 
 function ContactsPages ({title}: ContactsPagesProps) {
+
+
   useDocumentTitle(title);
 
   return (
@@ -18,7 +23,6 @@ function ContactsPages ({title}: ContactsPagesProps) {
         <div className="container container--size-l">
 
           <LogotypeComponent/>
-
           <NavigationComponent/>
           <ProfileComponent/>
 

@@ -1,6 +1,7 @@
 import {Navigate} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AuthorizationStatus} from '../../const';
 import {useAppSelector} from '../../hooks/use-store';
+
 
 type AuthorizationRouteProps = {
   children: JSX.Element;
@@ -8,8 +9,9 @@ type AuthorizationRouteProps = {
 
 function AuthorizationRoute ({children}: AuthorizationRouteProps): JSX.Element {
   const authStatus = useAppSelector((state) => state.authorizationStatus.authStatus);
+  const page = useAppSelector((state) => state.page.page);
 
-  return authStatus === AuthorizationStatus.Auth.toString() ? <Navigate to={AppRoute.Main}/> : children;
+  return authStatus === AuthorizationStatus.Auth.toString() ? <Navigate to={page}/> : children;
 }
 
 export {AuthorizationRoute};

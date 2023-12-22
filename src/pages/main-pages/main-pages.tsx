@@ -6,8 +6,8 @@ import {checkAuthAction} from '../../services/thunk/check-auth-actions';
 import {fetchQuestsAction} from '../../services/thunk/fetch-quests';
 import {FilterListGenreComponent} from '../../components/filter-list-genre/filter-list-genre';
 import {FilterListLevelComponent} from '../../components/filter-list-level/filter-list-level';
-import { useEffect } from 'react';
-import { ProfileComponent } from '../../components/profile-component/profile-component';
+import {useEffect} from 'react';
+import {ProfileComponent} from '../../components/profile-component/profile-component';
 
 
 type MainPagesProps = {
@@ -19,6 +19,7 @@ function MainPages ({title}: MainPagesProps) {
   const dispatch = useAppDispatch();
 
   useDocumentTitle(title);
+
   useEffect(() => {
     dispatch(checkAuthAction());
     dispatch(fetchQuestsAction());

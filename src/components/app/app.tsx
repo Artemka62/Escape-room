@@ -8,6 +8,7 @@ import {QuestPages} from '../../pages/quest-pages/quest-pages';
 import {MyQuestsPages} from '../../pages/my-quests-pages/my-quests-pages';
 import {ContactsPages} from '../../pages/contacts-pages/contacts-pages';
 import { AuthorizationRoute } from '../authorization-route/authorization-route';
+import { RedirectMyQuestComponent } from '../redirect-route/redirect-route';
 
 function App(): JSX.Element {
 
@@ -37,7 +38,9 @@ function App(): JSX.Element {
         <Route
           path={`${AppRoute.MyQuest}`}
           element ={
-            <MyQuestsPages title = {TitleDescription.MyQuests}/>
+            <RedirectMyQuestComponent>
+              <MyQuestsPages title = {TitleDescription.MyQuests}/>
+            </RedirectMyQuestComponent>
           }
         />
         <Route

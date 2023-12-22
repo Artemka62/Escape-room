@@ -9,8 +9,8 @@ import {AppRoute, AuthorizationStatus, Person} from '../../const';
 import {setLevel, setGenre} from '../../utils';
 import {ProfileComponent} from '../../components/profile-component/profile-component';
 import {getBookQuest} from '../../services/thunk/get-booking-quest';
-import { LoadingComponent } from '../../components/loading-component/loading-component';
-
+import {LoadingComponent} from '../../components/loading-component/loading-component';
+import {pageSlice} from '../../store/slices/pages-slice';
 
 type QuestPagesProps = {
   title: string;
@@ -26,6 +26,7 @@ function QuestPages ({title}: QuestPagesProps) {
   useDocumentTitle(title);
 
   useEffect(() => {
+    dispatch(pageSlice.actions.page(`${AppRoute.Quest}/${id || ''}`));
 
     if (id) {
       dispatch(fetchQuestAction(id));

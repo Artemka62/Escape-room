@@ -2,11 +2,16 @@ import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import { logoutAction } from '../../services/thunk/logout-action';
+import { useEffect } from 'react';
+import { checkAuthAction } from '../../services/thunk/check-auth-actions';
 
 function ProfileComponent () {
   const authStatus = useAppSelector((state) => state.authorizationStatus.authStatus);
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    dispatch(checkAuthAction());
+  }, []);
 
   function handleClickButtonOut () {
 
@@ -27,8 +32,12 @@ function ProfileComponent () {
 
   return (
     <div className="header__side-nav">
-      <Link to={authStatus === AuthorizationStatus.Auth ? AppRoute.Main : AppRoute.Login} className="btn btn--accent header__side-item" onClick={handleClickButtonOut}>
-        {authStatus === AuthorizationStatus.Auth ? 'Выйти' : 'Войти'}
+      <Link
+        to={authStatus === AuthorizationStatus.Auth ? AppRoute.Main : AppRoute.Login}
+        className={`${authStatus === AuthorizationStatus.Auth ? 'btn  header__side-item btn--accent' : 'btn  header__side-item'}`}
+        onClick={handleClickButtonOut}
+      >
+        {authStatus === AuthorizationStatus.Auth ? 'Выйти' : 'Вход'}
       </Link>
       <a
         className="link header__side-item header__phone-link"

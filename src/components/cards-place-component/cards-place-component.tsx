@@ -12,6 +12,11 @@ function CardsPlaceComponent() {
     .filter((question) => stateFilterLevel === FilterLevel.Any || question.level === stateFilterLevel)
     : [];
 
+
+  if(filteredQuestions.length === 0) {
+    return 'нет предложений такого уровня сложности';
+  }
+
   return (
     <div className="cards-grid">
       {filteredQuestions?.map((quest) => (

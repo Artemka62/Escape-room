@@ -32,7 +32,6 @@ function LoginPages({title}: LoginPagesProps) {
   } = useForm<FormData>();
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-
     dispatch(loginAction({login: data.email, password: data.password}));
   };
 
@@ -72,7 +71,6 @@ function LoginPages({title}: LoginPagesProps) {
           <div className="login__form">
             <form
               action="https://echo.htmlacademy.ru/"
-              method="post"
               className="login-form"
               onSubmit={(event) =>void handleSubmit(onSubmit)(event)}
             >
