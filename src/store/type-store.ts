@@ -17,7 +17,7 @@ type QuestCard = {
   previewImgWebp: string;
   level: string;
   type: string;
-  peopleMinMax: number[];
+  peopleMinMax: [number, number];
 }
 
 type QuestPageCard = {
@@ -27,25 +27,15 @@ type QuestPageCard = {
   previewImgWebp: string;
   level: string;
   type: string;
-  peopleMinMax: number[];
+  peopleMinMax: [number, number];
   description: string;
   coverImg: string;
   coverImgWebp: string;
-}
-
-type kzff = {
-  date: string;
-  time: string;
-  contactPerson: string;
-  phone: string;
-  withChildren: boolean;
-  peopleCount: number;
-  placeId: string;
-}
+};
 
 type BookingTimeToday ={
-    time: string;
-    isAvailable: boolean;
+  time: string;
+  isAvailable: boolean;
 };
 
 
@@ -53,7 +43,7 @@ type BookingQuest = {
   id: string;
   location: {
     address: string;
-    coords: [number,number];
+    coords: [number, number];
     };
   slots: {
     today: [BookingTimeToday];

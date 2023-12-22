@@ -1,14 +1,15 @@
-import { LogotypeComponent } from '../../components/logotype-component/logotype-component';
-import { NavigationComponent } from '../../components/navigation-component/navigation-component';
-import { ProfileComponent } from '../../components/profile-component/profile-component';
+import {LogotypeComponent} from '../../components/logotype-component/logotype-component';
+import {MapComponent} from '../../components/map-component/map-component';
+import {NavigationComponent} from '../../components/navigation-component/navigation-component';
+import {ProfileComponent} from '../../components/profile-component/profile-component';
 import {useDocumentTitle} from '../../hooks/use-document-title';
+import {mockPoint} from '../../mock/mock';
 
 type ContactsPagesProps = {
   title: string;
 }
 
 function ContactsPages ({title}: ContactsPagesProps) {
-
   useDocumentTitle(title);
 
   return (
@@ -82,7 +83,8 @@ function ContactsPages ({title}: ContactsPagesProps) {
             </dl>
             <div className="contacts__map">
               <div className="map">
-                <div className="map__container" />
+
+                <MapComponent points={mockPoint}/>
               </div>
             </div>
           </div>

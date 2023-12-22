@@ -5,15 +5,15 @@ import {LoadingComponent} from '../loading-component/loading-component';
 import {DEFAULT_NULL} from '../../const';
 import {useEffect, useState} from 'react';
 import * as L from 'leaflet';
-import { bookingQuestSlice } from '../../store/slices/bookink-quest-slice';
+import {bookingQuestSlice} from '../../store/slices/bookink-quest-slice';
 
 type MapComponentProps = {
-  offers: BookingQuest[];
+  points: BookingQuest[];
 };
 
-function MapComponent({offers}: MapComponentProps) {
+function MapComponent({points}: MapComponentProps) {
   const isLoading = useAppSelector((state) => state.bookingQuest.isLoading);
-  const [selectedMarker, setSelectedMarker] = useState<string>(offers[DEFAULT_NULL]?.id);
+  const [selectedMarker, setSelectedMarker] = useState<string>(points[DEFAULT_NULL]?.id);
   const dispatch = useAppDispatch();
 
   const activeIcon = new L.Icon({
@@ -29,7 +29,7 @@ function MapComponent({offers}: MapComponentProps) {
   });
 
   useEffect(()=>{
-    setSelectedMarker(offers[DEFAULT_NULL]?.id);
+    setSelectedMarker(points[DEFAULT_NULL]?.id);
   },[isLoading]);
 
   function handleMarkerClick(id: string) {
@@ -43,7 +43,7 @@ function MapComponent({offers}: MapComponentProps) {
 
   return (
     <MapContainer
-      center={offers[DEFAULT_NULL]?.location.coords}
+      center={points[DEFAULT_NULL]?.location.coords}
       zoom={10}
       scrollWheelZoom={false}
       id="map"
@@ -53,7 +53,7 @@ function MapComponent({offers}: MapComponentProps) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
         url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
       />
-      {offers?.map((quest) => (
+      {points?.map((quest) => (
         <Marker
           key={quest.id}
           position={quest.location.coords}

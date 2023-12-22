@@ -9,6 +9,7 @@ import {AppRoute, AuthorizationStatus, Person} from '../../const';
 import {setLevel, setGenre} from '../../utils';
 import {ProfileComponent} from '../../components/profile-component/profile-component';
 import {getBookQuest} from '../../services/thunk/get-booking-quest';
+import { LoadingComponent } from '../../components/loading-component/loading-component';
 
 
 type QuestPagesProps = {
@@ -20,7 +21,7 @@ function QuestPages ({title}: QuestPagesProps) {
   const dispatch = useAppDispatch();
   const quest = useAppSelector((state)=> state.quest.quest);
   const authStatus = useAppSelector((state)=> state.authorizationStatus.authStatus);
-
+  const isLoading = useAppSelector((state)=> state.quest.loadingStatus);
 
   useDocumentTitle(title);
 
@@ -34,6 +35,10 @@ function QuestPages ({title}: QuestPagesProps) {
 
   function handleClick () {
     dispatch(getBookQuest(quest?.id || ''));
+  }
+
+  if(isLoading) {
+    return <LoadingComponent/>;
   }
 
   return(
@@ -53,14 +58,14 @@ function QuestPages ({title}: QuestPagesProps) {
           <picture>
             <source
               type="image/webp"
-              srcSet={`${quest?.previewImgWebp ?? ''} ${quest?.coverImgWebp ?? ''} 2x`}
+              srcSet={`${quest?.previewImgWebp ?? ''}, ${quest?.coverImgWebp ?? ''} 2x`}
             />
             <img
               src={quest?.previewImg}
-              srcSet={`${quest?.coverImg ?? ''} 2x`}
+              srcSet={quest?.previewImg}
               width={1366}
               height={768}
-              alt=""
+              alt={quest?.title}
             />
           </picture>
         </div>

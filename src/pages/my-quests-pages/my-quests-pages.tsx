@@ -17,6 +17,7 @@ function MyQuestsPages({title}: MyQuestsPagesProps) {
   const stateReservation = useAppSelector((state) => state.reservationQuests.quests);
   const dispatch = useAppDispatch();
 
+
   useEffect(() => {
     dispatch(getMyReservation());
   },[]);
@@ -54,6 +55,7 @@ function MyQuestsPages({title}: MyQuestsPagesProps) {
             <h1 className="title title--size-m page-content__title">
               Мои бронирования
             </h1>
+            {stateReservation?.length === 0 ? <div>У вас нет забронированных квестов. </div> : ''}
           </div>
           <div className="cards-grid">
 

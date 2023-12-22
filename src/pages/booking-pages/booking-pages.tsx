@@ -139,7 +139,7 @@ function BookingPages ({title}: BookingPagesProps) {
               <div className="map">
                 <div className="map__container">
 
-                  <MapComponent offers={questsNear || []}/>
+                  <MapComponent points={questsNear || []}/>
 
                 </div>
               </div>
