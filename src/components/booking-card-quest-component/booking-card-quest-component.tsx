@@ -1,11 +1,24 @@
+import {Link} from 'react-router-dom';
 import {ResponseDataBooking} from '../../services/type-service';
-import { setLevel } from '../../utils';
+import {setLevel} from '../../utils';
+import {AppRoute} from '../../const';
+import {useAppDispatch} from '../../hooks/use-store';
+import {deleteReservation} from '../../services/thunk/delete-reservation';
+import {getMyReservation} from '../../services/thunk/get-my-reservation';
 
 type BookingCardProps = {
   quest: ResponseDataBooking;
 }
 
 function BookingCardQuestComponent ({quest}: BookingCardProps) {
+  const dispatch = useAppDispatch();
+
+
+  function handleClickButton () {
+    dispatch(deleteReservation(quest.id)).unwrap().then(() => {
+      dispatch(getMyReservation());
+    });
+  }
 
   return (
     <div className="quest-card">
@@ -26,9 +39,9 @@ function BookingCardQuestComponent ({quest}: BookingCardProps) {
       </div>
       <div className="quest-card__content">
         <div className="quest-card__info-wrapper">
-          <a className="quest-card__link" href="quest.html">
+          <Link to={`${AppRoute.Quest}/${quest.quest.id}`} className="quest-card__link">
             {quest.quest.title}
-          </a>
+          </Link>
           <span className="quest-card__info">
             {quest.location.address}
           </span>
@@ -47,7 +60,7 @@ function BookingCardQuestComponent ({quest}: BookingCardProps) {
             {setLevel(quest.quest.level)}
           </li>
         </ul>
-        <button
+        <button onClick={handleClickButton}
           className="btn btn--accent btn--secondary quest-card__btn"
           type="button"
         >
