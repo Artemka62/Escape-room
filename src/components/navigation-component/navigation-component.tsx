@@ -12,18 +12,30 @@ function NavigationComponent () {
   return (
     <nav className="main-nav header__main-nav">
       <ul className="main-nav__list">
-        <li className= "main-nav__item " onClick={() => dispatch(pageSlice.actions.page(AppRoute.Main))}>
+        <li className= "main-nav__item " onClick={() => {
+          dispatch(pageSlice.actions.page(AppRoute.Main));
+          dispatch(pageSlice.actions.pageForLink(AppRoute.Main));
+        }}
+        >
           <Link to={AppRoute.Main} className={statusPage === AppRoute.Main ? 'link not-disabled active' : 'link '}>
             Квесты
           </Link>
         </li>
-        <li className="main-nav__item" onClick={() => dispatch(pageSlice.actions.page(AppRoute.Contacts))}>
+        <li className="main-nav__item" onClick={() => {
+          dispatch(pageSlice.actions.page(AppRoute.Contacts));
+          dispatch(pageSlice.actions.pageForLink(AppRoute.Contacts));
+        }}
+        >
           <Link to={AppRoute.Contacts} className={statusPage === AppRoute.Contacts ? 'link not-disabled active' : 'link '} >
             Контакты
           </Link>
         </li>
         {isAuth === AuthorizationStatus.Auth ?
-          <li className="main-nav__item" onClick={() => dispatch(pageSlice.actions.page(AppRoute.MyQuest))}>
+          <li className="main-nav__item" onClick={() => {
+            dispatch(pageSlice.actions.page(AppRoute.MyQuest));
+            dispatch(pageSlice.actions.pageForLink(AppRoute.MyQuest));
+          }}
+          >
             <Link to={AppRoute.MyQuest} className={statusPage === AppRoute.MyQuest ? 'link not-disabled active' : 'link '} >
             Мои бронирования
             </Link>

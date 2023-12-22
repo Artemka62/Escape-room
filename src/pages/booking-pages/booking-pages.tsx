@@ -13,8 +13,9 @@ import {AddressComponent } from '../../components/address-component/address-comp
 import {useForm} from 'react-hook-form';
 import type {SubmitHandler} from 'react-hook-form';
 import {fetchQuestAction} from '../../services/thunk/fetch-quest';
-import { sendDataBooking } from '../../services/thunk/send-data-booking';
-import { bookingQuestSlice } from '../../store/slices/bookink-quest-slice';
+import {sendDataBooking} from '../../services/thunk/send-data-booking';
+import {bookingQuestSlice} from '../../store/slices/bookink-quest-slice';
+import {ErrorMessage} from '../../components/error-message/error-message';
 
 type BookingPagesProps = {
   title: string;
@@ -36,7 +37,8 @@ function BookingPages ({title}: BookingPagesProps) {
   const quest = useAppSelector((state)=> state.quest.quest);
   const stateTimeBooking = useAppSelector((state)=> state.bookingQuest.data);
   const navigate = useNavigate();
-  const error = useAppSelector((state)=> state.bookingQuest.error);
+  const errorValidation = useAppSelector((state)=> state.bookingQuest.error);
+  const errorFetchQuest = useAppSelector((state)=> state.quest.error);
 
   useEffect(() => {
     dispatch(getBookQuest(id || ''));
@@ -58,18 +60,16 @@ function BookingPages ({title}: BookingPagesProps) {
   });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-
     const allDataBooking = {
       questId: id || '',
       date: stateTimeBooking?.day || '',
       time: stateTimeBooking?.time.toString() || '',
       contactPerson: data.name,
-      phone: data.people,
+      phone: data.tel,
       withChildren: data.children,
       peopleCount: +data.people,
       placeId: stateIdBookingQuestId
     };
-
 
     dispatch(sendDataBooking(allDataBooking)).unwrap().then(() => {
       navigate(AppRoute.MyQuest);
@@ -97,6 +97,10 @@ function BookingPages ({title}: BookingPagesProps) {
   };
 
   useDocumentTitle(title);
+
+  if(errorFetchQuest){
+    return <ErrorMessage title={AppRoute.Error}/>;
+  }
 
   return (
     <div className="wrapper">
@@ -214,8 +218,8 @@ function BookingPages ({title}: BookingPagesProps) {
                   {...register('tel', {
                     required: 'Телефон обязателен',
                     pattern: {
-                      value: /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
-                      message: 'Введите телефон в формате +7 (000) 000-00-00 с пробелом перед началом скобки, и в конце скобки.',
+                      value: /^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$/,
+                      message: 'Введите телефон в формате +7(000)000-00-00.',
                     },
                   })}
                   aria-invalid={errors.tel ? 'true' : 'false'}
@@ -260,7 +264,7 @@ function BookingPages ({title}: BookingPagesProps) {
                 </span>
               </label>
             </fieldset>
-            {error !== false ? <span>{error}</span> : ''}
+            {errorValidation !== false ? <span>{errorValidation}</span> : ''}
             <button
               className="btn btn--accent btn--cta booking-form__submit"
               type="submit"

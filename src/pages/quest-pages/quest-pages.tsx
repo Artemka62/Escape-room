@@ -11,6 +11,7 @@ import {ProfileComponent} from '../../components/profile-component/profile-compo
 import {getBookQuest} from '../../services/thunk/get-booking-quest';
 import {LoadingComponent} from '../../components/loading-component/loading-component';
 import {pageSlice} from '../../store/slices/pages-slice';
+import { ErrorMessage } from '../../components/error-message/error-message';
 
 type QuestPagesProps = {
   title: string;
@@ -22,11 +23,12 @@ function QuestPages ({title}: QuestPagesProps) {
   const quest = useAppSelector((state)=> state.quest.quest);
   const authStatus = useAppSelector((state)=> state.authorizationStatus.authStatus);
   const isLoading = useAppSelector((state)=> state.quest.loadingStatus);
+  const isError = useAppSelector((state)=> state.quest.error);
 
   useDocumentTitle(title);
 
   useEffect(() => {
-    dispatch(pageSlice.actions.page(`${AppRoute.Quest}/${id || ''}`));
+    dispatch(pageSlice.actions.pageForLink(`${AppRoute.Quest}/${id || ''}`));
 
     if (id) {
       dispatch(fetchQuestAction(id));
@@ -40,6 +42,10 @@ function QuestPages ({title}: QuestPagesProps) {
 
   if(isLoading) {
     return <LoadingComponent/>;
+  }
+
+  if(isError) {
+    return <ErrorMessage title={AppRoute.Error}/>;
   }
 
   return(

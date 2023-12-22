@@ -3,9 +3,12 @@ import {LogotypeComponent} from '../../components/logotype-component/logotype-co
 import {MapComponent} from '../../components/map-component/map-component';
 import {NavigationComponent} from '../../components/navigation-component/navigation-component';
 import {ProfileComponent} from '../../components/profile-component/profile-component';
+import { AppRoute } from '../../const';
 import {useDocumentTitle} from '../../hooks/use-document-title';
+import { useAppDispatch } from '../../hooks/use-store';
 
 import {mockPoint} from '../../mock/mock';
+import { pageSlice } from '../../store/slices/pages-slice';
 
 
 type ContactsPagesProps = {
@@ -15,7 +18,10 @@ type ContactsPagesProps = {
 function ContactsPages ({title}: ContactsPagesProps) {
 
 
+  const dispatch = useAppDispatch();
+  dispatch(pageSlice.actions.pageForLink(AppRoute.Contacts));
   useDocumentTitle(title);
+
 
   return (
     <div className="wrapper">
@@ -87,7 +93,6 @@ function ContactsPages ({title}: ContactsPagesProps) {
             </dl>
             <div className="contacts__map">
               <div className="map">
-
                 <MapComponent points={mockPoint}/>
               </div>
             </div>

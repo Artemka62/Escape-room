@@ -37,7 +37,6 @@ function MainPages ({title}: MainPagesProps) {
           </span>
 
           <NavigationComponent/>
-
           <ProfileComponent/>
 
         </div>

@@ -77,6 +77,16 @@ const Day = {
   Tomorrow: 'tomorrow'
 } as const;
 
+const Map = {
+  IconUrlActive: 'img/svg/pin-active.svg',
+  IconUrlDefault: 'img/svg/pin-default.svg',
+  IconSizeWidth: 23,
+  IconSizeHeight:  42,
+  IconAnchorWidth: 11.5,
+  IconAnchorHeight: 42,
+  Zoom: 10
+} as const;
+
 
 export {
   AUTH_TOKEN_KEY_NAME,
@@ -92,5 +102,6 @@ export {
   FilterLevel,
   Person,
   GenreQuestRu,
-  Day
+  Day,
+  Map
 };

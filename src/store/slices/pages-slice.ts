@@ -4,10 +4,12 @@ import {AppRoute} from '../../const';
 
 type InitialState = {
   page: string;
+  pageForLink: string;
 }
 
 const initialState: InitialState = {
-  page: AppRoute.Main.toString(),
+  page: AppRoute.Main,
+  pageForLink: AppRoute.Main
 };
 
 const pageSlice = createSlice({
@@ -16,6 +18,9 @@ const pageSlice = createSlice({
   reducers: {
     page(state, action: PayloadAction<string>) {
       state.page = action.payload;
+    },
+    pageForLink(state, action: PayloadAction<string>) {
+      state.pageForLink = action.payload;
     }
   }
 });
