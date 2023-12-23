@@ -67,7 +67,7 @@ function BookingPages ({title}: BookingPagesProps) {
       name: '',
       tel: '',
       people: '',
-      children: true,
+      children: false,
     },
   });
 
@@ -270,7 +270,7 @@ function BookingPages ({title}: BookingPagesProps) {
                   type="checkbox"
                   id="children"
                   {...register('children')}
-                  defaultChecked
+
                 />
                 <span className="custom-checkbox__icon">
                   <svg width={20} height={17} aria-hidden="true">

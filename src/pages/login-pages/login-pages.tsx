@@ -4,9 +4,8 @@ import {useDocumentTitle} from '../../hooks/use-document-title';
 import {useForm} from 'react-hook-form';
 import {loginAction} from '../../services/thunk/login-actions';
 import {useAppDispatch} from '../../hooks/use-store';
-import {checkAuthAction} from '../../services/thunk/check-auth-actions';
-import {useEffect} from 'react';
 import type {SubmitHandler} from 'react-hook-form';
+import { useEffect } from 'react';
 
 type LoginPagesProps = {
   title: string;
@@ -19,17 +18,23 @@ type FormData = {
 
 function LoginPages({title}: LoginPagesProps) {
   useDocumentTitle(title);
-  const dispatch = useAppDispatch();
+
 
   useEffect(() => {
     //dispatch(checkAuthAction());
   },[]);
+  const dispatch = useAppDispatch();
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
+    formState: {errors},
+  } = useForm<FormData>({
+    defaultValues: {
+      email: '',
+      password: ''
+    },
+  });
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     dispatch(loginAction({login: data.email, password: data.password}));
