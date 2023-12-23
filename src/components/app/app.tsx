@@ -9,9 +9,14 @@ import {MyQuestsPages} from '../../pages/my-quests-pages/my-quests-pages';
 import {ContactsPages} from '../../pages/contacts-pages/contacts-pages';
 import { AuthorizationRoute } from '../authorization-route/authorization-route';
 import { RedirectComponent } from '../redirect-route/redirect-route';
+import { useAppDispatch } from '../../hooks/use-store';
+import { checkAuthAction } from '../../services/thunk/check-auth-actions';
+import { fetchQuestsAction } from '../../services/thunk/fetch-quests';
 
 function App(): JSX.Element {
-
+  const dispatch = useAppDispatch();
+  dispatch(fetchQuestsAction());
+  dispatch(checkAuthAction());
   return (
     <BrowserRouter>
       <Routes>

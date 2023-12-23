@@ -10,7 +10,7 @@ function AuthorizationRoute ({children}: AuthorizationRouteProps): JSX.Element {
   const authStatus = useAppSelector((state) => state.authorizationStatus.authStatus);
   const page = useAppSelector((state) => state.page.pageForLink);
 
-  return authStatus === AuthorizationStatus.Auth.toString() ? <Navigate to={page}/> : children;
+  return authStatus === AuthorizationStatus.Auth ? <Navigate to={page}/> : children;
 }
 
 export {AuthorizationRoute};

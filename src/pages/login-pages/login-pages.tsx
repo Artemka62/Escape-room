@@ -22,7 +22,7 @@ function LoginPages({title}: LoginPagesProps) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(checkAuthAction());
+    //dispatch(checkAuthAction());
   },[]);
 
   const {

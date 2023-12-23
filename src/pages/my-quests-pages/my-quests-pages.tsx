@@ -4,8 +4,11 @@ import {LogotypeComponent} from '../../components/logotype-component/logotype-co
 import {NavigationComponent} from '../../components/navigation-component/navigation-component';
 import {ProfileComponent} from '../../components/profile-component/profile-component';
 import {useDocumentTitle} from '../../hooks/use-document-title';
-import { useAppDispatch, useAppSelector } from '../../hooks/use-store';
-import { getMyReservation } from '../../services/thunk/get-my-reservation';
+import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
+import {getMyReservation} from '../../services/thunk/get-my-reservation';
+import {useNavigate} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus} from '../../const';
+import {pageSlice} from '../../store/slices/pages-slice';
 
 type MyQuestsPagesProps = {
   title: string;
@@ -16,10 +19,18 @@ function MyQuestsPages({title}: MyQuestsPagesProps) {
   useDocumentTitle(title);
   const stateReservation = useAppSelector((state) => state.reservationQuests.quests);
   const dispatch = useAppDispatch();
+  const authStatus = useAppSelector((state) => state.authorizationStatus.authStatus);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (authStatus !== AuthorizationStatus.Auth) {
+      navigate(AppRoute.Login);
+    }
+  }, [authStatus, navigate]);
 
   useEffect(() => {
     dispatch(getMyReservation());
+    dispatch(pageSlice.actions.page(AppRoute.MyQuest));
   },[]);
 
 

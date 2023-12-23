@@ -1,12 +1,14 @@
+import { useEffect } from 'react';
 import {LogotypeComponent} from '../../components/logotype-component/logotype-component';
 import {MapComponent} from '../../components/map-component/map-component';
 import {NavigationComponent} from '../../components/navigation-component/navigation-component';
 import {ProfileComponent} from '../../components/profile-component/profile-component';
 import {AppRoute} from '../../const';
 import {useDocumentTitle} from '../../hooks/use-document-title';
-import {useAppDispatch} from '../../hooks/use-store';
+import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import {mockPoint} from '../../mock/mock';
 import {pageSlice} from '../../store/slices/pages-slice';
+import { LoadingComponent } from '../../components/loading-component/loading-component';
 
 type ContactsPagesProps = {
   title: string;
@@ -14,9 +16,21 @@ type ContactsPagesProps = {
 
 function ContactsPages ({title}: ContactsPagesProps) {
   const dispatch = useAppDispatch();
+  const isLoadingAuth = useAppSelector((state)=> state.authorizationStatus.isLoadingAuth);
 
-  dispatch(pageSlice.actions.pageForLink(AppRoute.Contacts));
+  useEffect(() => {
+    dispatch(pageSlice.actions.pageForLink(AppRoute.Contacts));
+    dispatch(pageSlice.actions.page(AppRoute.Contacts));
+  },[]);
+
   useDocumentTitle(title);
+
+  if (isLoadingAuth) {
+    return <LoadingComponent/>;
+  }
+
+
+
 
   return (
     <div className="wrapper">

@@ -16,9 +16,9 @@ import {fetchQuestAction} from '../../services/thunk/fetch-quest';
 import {sendDataBooking} from '../../services/thunk/send-data-booking';
 import {bookingQuestSlice} from '../../store/slices/bookink-quest-slice';
 import {ErrorMessage} from '../../components/error-message/error-message';
-import { LoadingComponent } from '../../components/loading-component/loading-component';
 import { pageSlice } from '../../store/slices/pages-slice';
-import { checkAuthAction } from '../../services/thunk/check-auth-actions';
+import { LoadingComponent } from '../../components/loading-component/loading-component';
+
 
 type BookingPagesProps = {
   title: string;
@@ -42,16 +42,21 @@ function BookingPages ({title}: BookingPagesProps) {
   const navigate = useNavigate();
   const errorValidation = useAppSelector((state)=> state.bookingQuest.error);
   const errorFetchQuest = useAppSelector((state)=> state.quest.error);
-  const isLoadingAuth = useAppSelector((state)=> state.authorizationStatus.isLoadingAuth);
   const isLoadingBooking = useAppSelector((state)=> state.quest.loadingStatus);
+  const authStatus = useAppSelector((state) => state.authorizationStatus.authStatus);
 
   useEffect(() => {
     dispatch(getBookQuest(id || ''));
     dispatch(fetchQuestAction(id || ''));
     dispatch(bookingQuestSlice.actions.errorBooking(false));
-    // dispatch(pageSlice.actions.pageForLink(`${AppRoute.Quest}/${id || ''}${AppRoute.Booking}`));
-    // dispatch(checkAuthAction());
+    dispatch(pageSlice.actions.pageForLink(`${AppRoute.Quest}/${id || ''}${AppRoute.Booking}`));
   }, []);
+
+  useEffect(() => {
+    if (authStatus !== AuthorizationStatus.Auth) {
+      navigate(AppRoute.Login);
+    }
+  }, [authStatus, navigate]);
 
   const {
     register,
@@ -105,12 +110,15 @@ function BookingPages ({title}: BookingPagesProps) {
 
   useDocumentTitle(title);
 
-  // if (isLoadingBooking === true) {
-  //   return <LoadingComponent/>;
-  // }
+
   if(errorFetchQuest){
     return <ErrorMessage title={AppRoute.Error}/>;
   }
+
+  if (isLoadingBooking) {
+    return <LoadingComponent/>;
+  }
+
 
   return (
     <div className="wrapper">

@@ -1,6 +1,6 @@
-import { Navigate } from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AuthorizationStatus} from '../../const';
 import {useAppSelector} from '../../hooks/use-store';
+import {LoadingComponent} from '../loading-component/loading-component';
 
 type RedirectProps = {
   children: JSX.Element;
@@ -9,7 +9,7 @@ type RedirectProps = {
 function RedirectComponent ({children}: RedirectProps) {
   const authStatus = useAppSelector((state) => state.authorizationStatus.authStatus);
 
-  return authStatus !== AuthorizationStatus.Auth ? <Navigate to={AppRoute.Login}/> : children;
+  return authStatus === AuthorizationStatus.Unknown ? <LoadingComponent/> : children;
 }
 
 export {RedirectComponent};

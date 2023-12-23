@@ -22,25 +22,25 @@ function QuestPages ({title}: QuestPagesProps) {
   const dispatch = useAppDispatch();
   const quest = useAppSelector((state)=> state.quest.quest);
   const authStatus = useAppSelector((state)=> state.authorizationStatus.authStatus);
-  const isLoading = useAppSelector((state)=> state.quest.loadingStatus);
+  const isLoadingQuest = useAppSelector((state)=> state.quest.loadingStatus);
   const isError = useAppSelector((state)=> state.quest.error);
 
   useDocumentTitle(title);
 
   useEffect(() => {
     dispatch(pageSlice.actions.pageForLink(`${AppRoute.Quest}/${id || ''}`));
+    //dispatch(pageSlice.actions.page(AppRoute.Contacts));
 
     if (id) {
       dispatch(fetchQuestAction(id));
     }
   },[]);
 
-
   function handleClick () {
     dispatch(getBookQuest(quest?.id || ''));
   }
 
-  if(isLoading) {
+  if(isLoadingQuest) {
     return <LoadingComponent/>;
   }
 
@@ -55,7 +55,6 @@ function QuestPages ({title}: QuestPagesProps) {
 
           <LogotypeComponent/>
           <NavigationComponent/>
-
           <ProfileComponent/>
 
         </div>

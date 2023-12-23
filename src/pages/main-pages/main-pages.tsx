@@ -1,8 +1,7 @@
 import {NavigationComponent} from '../../components/navigation-component/navigation-component';
 import {CardsPlaceComponent} from '../../components/cards-place-component/cards-place-component';
 import {useDocumentTitle} from '../../hooks/use-document-title';
-import {useAppDispatch} from '../../hooks/use-store';
-import {checkAuthAction} from '../../services/thunk/check-auth-actions';
+import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import {fetchQuestsAction} from '../../services/thunk/fetch-quests';
 import {FilterListGenreComponent} from '../../components/filter-list-genre/filter-list-genre';
 import {FilterListLevelComponent} from '../../components/filter-list-level/filter-list-level';
@@ -10,6 +9,7 @@ import {useEffect} from 'react';
 import {ProfileComponent} from '../../components/profile-component/profile-component';
 import {AppRoute} from '../../const';
 import {pageSlice} from '../../store/slices/pages-slice';
+import { LoadingComponent } from '../../components/loading-component/loading-component';
 
 type MainPagesProps = {
   title: string;
@@ -17,15 +17,17 @@ type MainPagesProps = {
 
 function MainPages ({title}: MainPagesProps) {
   const dispatch = useAppDispatch();
-
+  const isLoadingAuth = useAppSelector((state)=> state.authorizationStatus.isLoadingAuth);
   useDocumentTitle(title);
 
   useEffect(() => {
-    dispatch(checkAuthAction());
     dispatch(fetchQuestsAction());
     dispatch(pageSlice.actions.pageForLink(AppRoute.Main));
-
   }, []);
+
+  if (isLoadingAuth) {
+    return <LoadingComponent/>;
+  }
 
   return (
     <div className="wrapper">

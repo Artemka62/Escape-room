@@ -1,32 +1,18 @@
-import { Link } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import {Link} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
-import { logoutAction } from '../../services/thunk/logout-action';
-import { useEffect } from 'react';
-import { checkAuthAction } from '../../services/thunk/check-auth-actions';
+import {logoutAction} from '../../services/thunk/logout-action';
+import { pageSlice } from '../../store/slices/pages-slice';
+
 
 function ProfileComponent () {
   const authStatus = useAppSelector((state) => state.authorizationStatus.authStatus);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    //dispatch(checkAuthAction());
-  }, []);
-
-  function handleClickButtonOut () {
-
+  function handleClickButton () {
     if(authStatus === AuthorizationStatus.Auth) {
-
-      dispatch(logoutAction()).unwrap().then(() => {
-        // dispatch(fetchOffersAction());
-        // dispatch(dataUserSlice.actions.addUserData(null));
-        // dispatch(offerSlice.actions.addLoadOfferCard(null));
-      }).then(() => {
-
-        // if(currentPathname === AppRoute.Favorites.toString()){
-        //   navigate(AppRoute.Login);
-        // }
-      });
+      dispatch(pageSlice.actions.page(AppRoute.Quest));
+      dispatch(logoutAction());
     }
   }
 
@@ -35,7 +21,7 @@ function ProfileComponent () {
       <Link
         to={authStatus === AuthorizationStatus.Auth ? AppRoute.Main : AppRoute.Login}
         className={`${authStatus === AuthorizationStatus.Auth ? 'btn  header__side-item btn--accent' : 'btn  header__side-item'}`}
-        onClick={handleClickButtonOut}
+        onClick={handleClickButton}
       >
         {authStatus === AuthorizationStatus.Auth ? 'Выйти' : 'Вход'}
       </Link>
