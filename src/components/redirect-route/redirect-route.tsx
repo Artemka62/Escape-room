@@ -1,15 +1,15 @@
-import {AuthorizationStatus, TitleDescription} from '../../const';
+import { Navigate } from 'react-router-dom';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import {useAppSelector} from '../../hooks/use-store';
-import {LoginPages} from '../../pages/login-pages/login-pages';
 
 type RedirectProps = {
   children: JSX.Element;
 }
 
-function RedirectMyQuestComponent ({children}: RedirectProps) {
+function RedirectComponent ({children}: RedirectProps) {
   const authStatus = useAppSelector((state) => state.authorizationStatus.authStatus);
 
-  return authStatus !== AuthorizationStatus.Auth ? <LoginPages title={TitleDescription.LoginPage}/> : children;
+  return authStatus !== AuthorizationStatus.Auth ? <Navigate to={AppRoute.Login}/> : children;
 }
 
-export {RedirectMyQuestComponent};
+export {RedirectComponent};

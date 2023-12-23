@@ -1,37 +1,30 @@
-
 import {LogotypeComponent} from '../../components/logotype-component/logotype-component';
 import {MapComponent} from '../../components/map-component/map-component';
 import {NavigationComponent} from '../../components/navigation-component/navigation-component';
 import {ProfileComponent} from '../../components/profile-component/profile-component';
-import { AppRoute } from '../../const';
+import {AppRoute} from '../../const';
 import {useDocumentTitle} from '../../hooks/use-document-title';
-import { useAppDispatch } from '../../hooks/use-store';
-
+import {useAppDispatch} from '../../hooks/use-store';
 import {mockPoint} from '../../mock/mock';
-import { pageSlice } from '../../store/slices/pages-slice';
-
+import {pageSlice} from '../../store/slices/pages-slice';
 
 type ContactsPagesProps = {
   title: string;
 }
 
 function ContactsPages ({title}: ContactsPagesProps) {
-
-
   const dispatch = useAppDispatch();
+
   dispatch(pageSlice.actions.pageForLink(AppRoute.Contacts));
   useDocumentTitle(title);
-
 
   return (
     <div className="wrapper">
       <header className="header">
         <div className="container container--size-l">
-
           <LogotypeComponent/>
           <NavigationComponent/>
           <ProfileComponent/>
-
         </div>
       </header>
       <main className="page-content decorated-page">

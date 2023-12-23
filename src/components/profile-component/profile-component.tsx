@@ -10,7 +10,7 @@ function ProfileComponent () {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(checkAuthAction());
+    //dispatch(checkAuthAction());
   }, []);
 
   function handleClickButtonOut () {

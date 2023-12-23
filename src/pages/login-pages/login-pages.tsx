@@ -110,7 +110,7 @@ function LoginPages({title}: LoginPagesProps) {
                       {...register('password', {
                         required: 'Пароль обязателен',
                         pattern: {
-                          value: /^(?=.*[A-Za-z])(?=.*\d).{3,15}$/,
+                          value: /^(?=.*[A-Za-zА-Яа-я])(?=.*\d).{3,15}$/,
                           message:
                             'Пароль должен содержать минимум одну букву и одну цифру, от 3 до 15 символов',
                         },

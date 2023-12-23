@@ -8,14 +8,14 @@ import {FilterListGenreComponent} from '../../components/filter-list-genre/filte
 import {FilterListLevelComponent} from '../../components/filter-list-level/filter-list-level';
 import {useEffect} from 'react';
 import {ProfileComponent} from '../../components/profile-component/profile-component';
-
+import {AppRoute} from '../../const';
+import {pageSlice} from '../../store/slices/pages-slice';
 
 type MainPagesProps = {
   title: string;
 }
 
 function MainPages ({title}: MainPagesProps) {
-
   const dispatch = useAppDispatch();
 
   useDocumentTitle(title);
@@ -23,6 +23,7 @@ function MainPages ({title}: MainPagesProps) {
   useEffect(() => {
     dispatch(checkAuthAction());
     dispatch(fetchQuestsAction());
+    dispatch(pageSlice.actions.pageForLink(AppRoute.Main));
 
   }, []);
 
@@ -35,10 +36,8 @@ function MainPages ({title}: MainPagesProps) {
               <use xlinkHref="#logo" />
             </svg>
           </span>
-
           <NavigationComponent/>
           <ProfileComponent/>
-
         </div>
       </header>
       <main className="page-content">
@@ -53,17 +52,12 @@ function MainPages ({title}: MainPagesProps) {
           </div>
           <div className="page-content__item">
             <form className="filter" action="#" method="get">
-
               <FilterListGenreComponent/>
               <FilterListLevelComponent/>
-
-
             </form>
           </div>
           <h2 className="title visually-hidden">Выберите квест</h2>
-
           <CardsPlaceComponent/>
-
         </div>
       </main>
       <footer className="footer">

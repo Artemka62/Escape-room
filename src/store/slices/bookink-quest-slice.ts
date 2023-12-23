@@ -3,6 +3,7 @@ import {getBookQuest} from '../../services/thunk/get-booking-quest';
 import { BookingQuest, DataBooking } from '../type-store';
 import { sendDataBooking } from '../../services/thunk/send-data-booking';
 import { ResponseDataBooking } from '../../services/type-service';
+import { DEFAULT_NULL } from '../../const';
 
 type StateZBookingQuest ={
   quest: BookingQuest[] | null;
@@ -43,7 +44,7 @@ const bookingQuestSlice = createSlice({
       .addCase(getBookQuest.fulfilled, (state, action: PayloadAction<BookingQuest[]>) => {
         state.quest = action.payload;
         state.isLoading = false;
-        state.id = action.payload[0].id;
+        state.id = action.payload[DEFAULT_NULL].id;
       })
       .addCase(getBookQuest.pending, (state) => {
         state.isLoading = true;

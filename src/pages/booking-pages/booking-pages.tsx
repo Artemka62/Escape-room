@@ -8,7 +8,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import {getBookQuest} from '../../services/thunk/get-booking-quest';
 import {useNavigate, useParams} from 'react-router-dom';
 import {ButtonTimeBookingComponent} from '../../components/button-time-booking-component/button-time-booking-component';
-import {AppRoute, Day} from '../../const';
+import {AppRoute, AuthorizationStatus, Day} from '../../const';
 import {AddressComponent } from '../../components/address-component/address-component';
 import {useForm} from 'react-hook-form';
 import type {SubmitHandler} from 'react-hook-form';
@@ -16,6 +16,9 @@ import {fetchQuestAction} from '../../services/thunk/fetch-quest';
 import {sendDataBooking} from '../../services/thunk/send-data-booking';
 import {bookingQuestSlice} from '../../store/slices/bookink-quest-slice';
 import {ErrorMessage} from '../../components/error-message/error-message';
+import { LoadingComponent } from '../../components/loading-component/loading-component';
+import { pageSlice } from '../../store/slices/pages-slice';
+import { checkAuthAction } from '../../services/thunk/check-auth-actions';
 
 type BookingPagesProps = {
   title: string;
@@ -39,11 +42,15 @@ function BookingPages ({title}: BookingPagesProps) {
   const navigate = useNavigate();
   const errorValidation = useAppSelector((state)=> state.bookingQuest.error);
   const errorFetchQuest = useAppSelector((state)=> state.quest.error);
+  const isLoadingAuth = useAppSelector((state)=> state.authorizationStatus.isLoadingAuth);
+  const isLoadingBooking = useAppSelector((state)=> state.quest.loadingStatus);
 
   useEffect(() => {
     dispatch(getBookQuest(id || ''));
     dispatch(fetchQuestAction(id || ''));
     dispatch(bookingQuestSlice.actions.errorBooking(false));
+    // dispatch(pageSlice.actions.pageForLink(`${AppRoute.Quest}/${id || ''}${AppRoute.Booking}`));
+    // dispatch(checkAuthAction());
   }, []);
 
   const {
@@ -98,6 +105,9 @@ function BookingPages ({title}: BookingPagesProps) {
 
   useDocumentTitle(title);
 
+  // if (isLoadingBooking === true) {
+  //   return <LoadingComponent/>;
+  // }
   if(errorFetchQuest){
     return <ErrorMessage title={AppRoute.Error}/>;
   }
