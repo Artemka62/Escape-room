@@ -68,7 +68,7 @@ function QuestPages ({title}: QuestPagesProps) {
             />
             <img
               src={quest?.previewImg}
-              srcSet={quest?.previewImg}
+              srcSet={`${quest?.previewImg ?? ''} 2x`}
               width={1366}
               height={768}
               alt={quest?.title}

@@ -18,7 +18,7 @@ type LoginPagesProps = {
 type FormData = {
   email: string;
   password: string;
-  userAgreement: boolean; // Add userAgreement to FormData
+  userAgreement: boolean;
 };
 
 function LoginPages({title}: LoginPagesProps) {
@@ -39,7 +39,7 @@ function LoginPages({title}: LoginPagesProps) {
     defaultValues: {
       email: '',
       password: '',
-      userAgreement: false, // Set default value for the checkbox
+      userAgreement: false
     },
   });
 

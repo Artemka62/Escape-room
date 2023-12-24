@@ -30,6 +30,7 @@ type FormData = {
   tel: string;
   people: string;
   children: boolean;
+  userAgreement: boolean;
 };
 
 function BookingPages ({title}: BookingPagesProps) {
@@ -70,6 +71,7 @@ function BookingPages ({title}: BookingPagesProps) {
       tel: '',
       people: '',
       children: false,
+      userAgreement: false
     },
   });
 
@@ -127,11 +129,9 @@ function BookingPages ({title}: BookingPagesProps) {
     <div className="wrapper">
       <header className="header">
         <div className="container container--size-l">
-
           <LogotypeComponent/>
           <NavigationComponent/>
           <ProfileComponent/>
-
         </div>
       </header>
       <main className="page-content decorated-page">
@@ -252,7 +252,6 @@ function BookingPages ({title}: BookingPagesProps) {
                   type="number"
                   id="person"
                   placeholder="Количество участников"
-                  required
                   {...register('people', { validate: validateNumberOfParticipants })}
                   aria-invalid={errors.people ? 'true' : 'false'}
                 />
@@ -286,12 +285,11 @@ function BookingPages ({title}: BookingPagesProps) {
             >
               Забронировать
             </button>
-            <label className="custom-checkbox booking-form__checkbox booking-form__checkbox--agreement">
+            <label className="custom-checkbox login-form__checkbox">
               <input
                 type="checkbox"
                 id="id-order-agreement"
-                name="user-agreement"
-                required
+                {...register('userAgreement', {required: 'Вы должны согласиться cпользовательским соглашением для продолжения' })}
               />
               <span className="custom-checkbox__icon">
                 <svg width={20} height={17} aria-hidden="true">
@@ -299,13 +297,16 @@ function BookingPages ({title}: BookingPagesProps) {
                 </svg>
               </span>
               <span className="custom-checkbox__label">
-                Я&nbsp;согласен с
+                Я согласен с
                 <a className="link link--active-silver link--underlined" href="#">
                   правилами обработки персональных данных
                 </a>
-                &nbsp;и пользовательским соглашением
+                и пользовательским соглашением
               </span>
             </label>
+            {errors.userAgreement && (
+              <span className="error">{errors.userAgreement.message}</span>
+            )}
           </form>
         </div>
       </main>
