@@ -20,7 +20,7 @@ function ProfileComponent () {
     <div className="header__side-nav">
       <Link
         to={authStatus === AuthorizationStatus.Auth ? AppRoute.Main : AppRoute.Login}
-        className={`${authStatus === AuthorizationStatus.Auth ? 'btn  header__side-item btn--accent' : 'btn  header__side-item'}`}
+        className={`${authStatus === AuthorizationStatus.Auth ? 'btn  header__side-item btn--accent' : 'btn  header__side-item header__login-btn'}`}
         onClick={handleClickButton}
       >
         {authStatus === AuthorizationStatus.Auth ? 'Выйти' : 'Вход'}
