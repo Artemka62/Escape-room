@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 import {LogotypeComponent} from '../../components/logotype-component/logotype-component';
 import {MapComponent} from '../../components/map-component/map-component';
 import {NavigationComponent} from '../../components/navigation-component/navigation-component';
@@ -8,7 +8,9 @@ import {useDocumentTitle} from '../../hooks/use-document-title';
 import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import {mockPoint} from '../../mock/mock';
 import {pageSlice} from '../../store/slices/pages-slice';
-import { LoadingComponent } from '../../components/loading-component/loading-component';
+import {LoadingComponent} from '../../components/loading-component/loading-component';
+import {ErrorMessage} from '../../components/error-message/error-message';
+import {fetchQuestsAction} from '../../services/thunk/fetch-quests';
 
 type ContactsPagesProps = {
   title: string;
@@ -17,10 +19,12 @@ type ContactsPagesProps = {
 function ContactsPages ({title}: ContactsPagesProps) {
   const dispatch = useAppDispatch();
   const isLoadingAuth = useAppSelector((state)=> state.authorizationStatus.isLoadingAuth);
+  const error = useAppSelector((state) => state.quests.error);
 
   useEffect(() => {
     dispatch(pageSlice.actions.pageForLink(AppRoute.Contacts));
     dispatch(pageSlice.actions.page(AppRoute.Contacts));
+    dispatch(fetchQuestsAction());
   },[]);
 
   useDocumentTitle(title);
@@ -29,8 +33,9 @@ function ContactsPages ({title}: ContactsPagesProps) {
     return <LoadingComponent/>;
   }
 
-
-
+  if(error !== null){
+    return <ErrorMessage title ={AppRoute.Error}/>;
+  }
 
   return (
     <div className="wrapper">

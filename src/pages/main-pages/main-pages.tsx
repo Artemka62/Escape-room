@@ -9,7 +9,9 @@ import {useEffect} from 'react';
 import {ProfileComponent} from '../../components/profile-component/profile-component';
 import {AppRoute} from '../../const';
 import {pageSlice} from '../../store/slices/pages-slice';
-import { LoadingComponent } from '../../components/loading-component/loading-component';
+import {LoadingComponent} from '../../components/loading-component/loading-component';
+import {checkAuthAction} from '../../services/thunk/check-auth-actions';
+import {ErrorMessage} from '../../components/error-message/error-message';
 
 type MainPagesProps = {
   title: string;
@@ -18,15 +20,22 @@ type MainPagesProps = {
 function MainPages ({title}: MainPagesProps) {
   const dispatch = useAppDispatch();
   const isLoadingAuth = useAppSelector((state)=> state.authorizationStatus.isLoadingAuth);
+  const error = useAppSelector((state) => state.quests.error);
+
   useDocumentTitle(title);
 
   useEffect(() => {
     dispatch(fetchQuestsAction());
     dispatch(pageSlice.actions.pageForLink(AppRoute.Main));
+    dispatch(checkAuthAction());
   }, []);
 
   if (isLoadingAuth) {
     return <LoadingComponent/>;
+  }
+
+  if(error !== null){
+    return <ErrorMessage title ={AppRoute.Error}/>;
   }
 
   return (

@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {ResponseDataBooking} from '../../services/type-service';
+import {getMyReservation} from '../../services/thunk/get-my-reservation';
 import type {PayloadAction} from '@reduxjs/toolkit';
-import { ResponseDataBooking } from '../../services/type-service';
-import { getMyReservation } from '../../services/thunk/get-my-reservation';
 
 type StateReservationQuests = {
   quests: ResponseDataBooking[] | null;

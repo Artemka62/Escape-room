@@ -3,9 +3,12 @@ import {NavigationComponent} from '../../components/navigation-component/navigat
 import {useDocumentTitle} from '../../hooks/use-document-title';
 import {useForm} from 'react-hook-form';
 import {loginAction} from '../../services/thunk/login-actions';
-import {useAppDispatch} from '../../hooks/use-store';
+import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
+import {ErrorMessage} from '../../components/error-message/error-message';
+import {AppRoute} from '../../const';
+import {useEffect} from 'react';
+import {fetchQuestsAction} from '../../services/thunk/fetch-quests';
 import type {SubmitHandler} from 'react-hook-form';
-import { useEffect } from 'react';
 
 type LoginPagesProps = {
   title: string;
@@ -18,12 +21,13 @@ type FormData = {
 
 function LoginPages({title}: LoginPagesProps) {
   useDocumentTitle(title);
-
+  const dispatch = useAppDispatch();
+  const isError = useAppSelector((state) => state.authorizationStatus.error);
+  const isErrorServer = useAppSelector((state)=> state.quests.error);
 
   useEffect(() => {
-    //dispatch(checkAuthAction());
-  },[]);
-  const dispatch = useAppDispatch();
+    dispatch(fetchQuestsAction());
+  }, []);
 
   const {
     register,
@@ -39,6 +43,10 @@ function LoginPages({title}: LoginPagesProps) {
   const onSubmit: SubmitHandler<FormData> = (data) => {
     dispatch(loginAction({login: data.email, password: data.password}));
   };
+
+  if(isError !== null || isErrorServer !== null){
+    return <ErrorMessage title ={AppRoute.Error}/>;
+  }
 
   return (
     <div className="wrapper">
@@ -77,6 +85,7 @@ function LoginPages({title}: LoginPagesProps) {
             <form
               action="https://echo.htmlacademy.ru/"
               className="login-form"
+              method="post"
               onSubmit={(event) =>void handleSubmit(onSubmit)(event)}
             >
               <div className="login-form__inner-wrapper">
@@ -92,6 +101,7 @@ function LoginPages({title}: LoginPagesProps) {
                       type="email"
                       id="email"
                       placeholder="Адрес электронной почты"
+                      required
                       {...register('email', {
                         required: 'Адрес электронной почты обязателен',
                         pattern: {
@@ -99,6 +109,7 @@ function LoginPages({title}: LoginPagesProps) {
                           message: 'Введите корректный адрес электронной почты',
                         },
                       })}
+                      aria-invalid={errors.email ? 'true' : 'false'}
                     />
                     {errors.email && (
                       <span className="error">{errors.email.message}</span>
@@ -112,6 +123,7 @@ function LoginPages({title}: LoginPagesProps) {
                       type="password"
                       id="password"
                       placeholder="Пароль"
+                      required
                       {...register('password', {
                         required: 'Пароль обязателен',
                         pattern: {
@@ -120,6 +132,7 @@ function LoginPages({title}: LoginPagesProps) {
                             'Пароль должен содержать минимум одну букву и одну цифру, от 3 до 15 символов',
                         },
                       })}
+                      aria-invalid={errors.password ? 'true' : 'false'}
                     />
                     {errors.password && (
                       <span className="error">{errors.password.message}</span>
@@ -131,9 +144,11 @@ function LoginPages({title}: LoginPagesProps) {
                   type="submit"
                 >
                   Войти
+
                 </button>
+
               </div>
-              <label className="custom-checkbox login-form__checkbox">
+              <label className="custom-checkbox login-form__checkbox" htmlFor="id-order-agreement">
                 <input
                   type="checkbox"
                   id="id-order-agreement"

@@ -16,9 +16,9 @@ import {fetchQuestAction} from '../../services/thunk/fetch-quest';
 import {sendDataBooking} from '../../services/thunk/send-data-booking';
 import {bookingQuestSlice} from '../../store/slices/bookink-quest-slice';
 import {ErrorMessage} from '../../components/error-message/error-message';
-import { pageSlice } from '../../store/slices/pages-slice';
-import { LoadingComponent } from '../../components/loading-component/loading-component';
-
+import {pageSlice} from '../../store/slices/pages-slice';
+import {LoadingComponent} from '../../components/loading-component/loading-component';
+import {getMyReservation} from '../../services/thunk/get-my-reservation';
 
 type BookingPagesProps = {
   title: string;
@@ -41,7 +41,8 @@ function BookingPages ({title}: BookingPagesProps) {
   const stateTimeBooking = useAppSelector((state)=> state.bookingQuest.data);
   const navigate = useNavigate();
   const errorValidation = useAppSelector((state)=> state.bookingQuest.error);
-  const errorFetchQuest = useAppSelector((state)=> state.quest.error);
+  const errorServer = useAppSelector((state)=> state.bookingQuest.errorServer);
+  const errorReservation = useAppSelector((state)=> state.reservationQuests.error);
   const isLoadingBooking = useAppSelector((state)=> state.quest.loadingStatus);
   const authStatus = useAppSelector((state) => state.authorizationStatus.authStatus);
 
@@ -87,6 +88,7 @@ function BookingPages ({title}: BookingPagesProps) {
       navigate(AppRoute.MyQuest);
       dispatch(bookingQuestSlice.actions.errorBooking(false));
     });
+    dispatch(getMyReservation());
   };
 
   const validateNumberOfParticipants = (value:string) => {
@@ -111,7 +113,7 @@ function BookingPages ({title}: BookingPagesProps) {
   useDocumentTitle(title);
 
 
-  if(errorFetchQuest){
+  if(errorServer !== null || errorReservation !== null){
     return <ErrorMessage title={AppRoute.Error}/>;
   }
 
@@ -179,18 +181,13 @@ function BookingPages ({title}: BookingPagesProps) {
               <fieldset className="booking-form__date-section">
                 <legend className="booking-form__date-title">Сегодня</legend>
                 <div className="booking-form__date-inner-wrapper">
-
-
                   {findDataQuest?.slots.today.map((data) => <ButtonTimeBookingComponent key={data.time} data={data} day={Day.Today}/>)}
-
                 </div>
               </fieldset>
               <fieldset className="booking-form__date-section">
                 <legend className="booking-form__date-title">Завтра</legend>
                 <div className="booking-form__date-inner-wrapper">
-
                   {findDataQuest?.slots.tomorrow.map((data) => <ButtonTimeBookingComponent key={data.time} data={data} day={Day.Tomorrow}/>)}
-
                 </div>
               </fieldset>
             </fieldset>
@@ -270,7 +267,6 @@ function BookingPages ({title}: BookingPagesProps) {
                   type="checkbox"
                   id="children"
                   {...register('children')}
-
                 />
                 <span className="custom-checkbox__icon">
                   <svg width={20} height={17} aria-hidden="true">
@@ -288,9 +284,7 @@ function BookingPages ({title}: BookingPagesProps) {
               type="submit"
             >
               Забронировать
-
             </button>
-
             <label className="custom-checkbox booking-form__checkbox booking-form__checkbox--agreement">
               <input
                 type="checkbox"

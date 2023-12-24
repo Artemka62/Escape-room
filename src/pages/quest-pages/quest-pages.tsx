@@ -1,4 +1,4 @@
-import {Link, useParams} from 'react-router-dom';
+import {Link,useParams} from 'react-router-dom';
 import {LogotypeComponent} from '../../components/logotype-component/logotype-component';
 import {NavigationComponent} from '../../components/navigation-component/navigation-component';
 import {useDocumentTitle} from '../../hooks/use-document-title';
@@ -29,7 +29,6 @@ function QuestPages ({title}: QuestPagesProps) {
 
   useEffect(() => {
     dispatch(pageSlice.actions.pageForLink(`${AppRoute.Quest}/${id || ''}`));
-    //dispatch(pageSlice.actions.page(AppRoute.Contacts));
 
     if (id) {
       dispatch(fetchQuestAction(id));
@@ -44,7 +43,7 @@ function QuestPages ({title}: QuestPagesProps) {
     return <LoadingComponent/>;
   }
 
-  if(isError) {
+  if(isError !== null) {
     return <ErrorMessage title={AppRoute.Error}/>;
   }
 

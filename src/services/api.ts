@@ -19,6 +19,19 @@ const createApi = (): AxiosInstance => {
       return config;
     },
   );
+  // api.interceptors.response.use(
+  //   (response) => response,
+  //   (error) => {
+  //     // Обработка ошибок сети (сервер недоступен, таймаут и др.)
+  //     if (axios.isAxiosError(error)) {
+  //       alert('Network error:', error);
+  //       // Добавьте свой код обработки ошибок здесь
+  //     }
+
+  //     // Передайте ошибку дальше, чтобы ее обработать в вызывающем коде
+  //     return Promise.reject(error);
+  //   }
+  // );
 
   return api;
 };

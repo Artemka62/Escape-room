@@ -9,18 +9,18 @@ import {getMyReservation} from '../../services/thunk/get-my-reservation';
 import {useNavigate} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {pageSlice} from '../../store/slices/pages-slice';
+import { ErrorMessage } from '../../components/error-message/error-message';
 
 type MyQuestsPagesProps = {
   title: string;
 }
 
 function MyQuestsPages({title}: MyQuestsPagesProps) {
-
-  useDocumentTitle(title);
   const stateReservation = useAppSelector((state) => state.reservationQuests.quests);
   const dispatch = useAppDispatch();
   const authStatus = useAppSelector((state) => state.authorizationStatus.authStatus);
   const navigate = useNavigate();
+  const isErrorServer = useAppSelector((state)=> state.reservationQuests.error);
 
   useEffect(() => {
     if (authStatus !== AuthorizationStatus.Auth) {
@@ -33,6 +33,11 @@ function MyQuestsPages({title}: MyQuestsPagesProps) {
     dispatch(pageSlice.actions.page(AppRoute.MyQuest));
   },[]);
 
+  useDocumentTitle(title);
+
+  if(isErrorServer !== null){
+    return <ErrorMessage title ={AppRoute.Error}/>;
+  }
 
   return(
     <div className="wrapper">
@@ -69,10 +74,7 @@ function MyQuestsPages({title}: MyQuestsPagesProps) {
             {stateReservation?.length === 0 ? <div>У вас нет забронированных квестов. </div> : ''}
           </div>
           <div className="cards-grid">
-
             {stateReservation?.map((quest) => <BookingCardQuestComponent key={quest.id} quest={quest}/>)}
-
-
           </div>
         </div>
       </main>
