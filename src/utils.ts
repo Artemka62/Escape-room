@@ -1,4 +1,4 @@
-import { FilterGenre, LevelQuestRu, GenreQuestRu, FilterLevel } from './const';
+import { FilterGenre, LevelQuestRu, GenreQuestRu, FilterLevel, FORMAT_TIME, DEFAULT_NULL } from './const';
 
 function setLevel (level: string) {
   switch (level) {
@@ -32,8 +32,9 @@ function setGenre (genre: string) {
 
 function formatTime (timeString: string): string {
   const [hours, minutes] = timeString.split(':').map(Number);
-  const formattedHours = hours < 10 ? `0${hours}` : hours;
-  const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+  const formattedHours = hours < FORMAT_TIME ? `${DEFAULT_NULL}${hours}` : hours;
+  const formattedMinutes = minutes < FORMAT_TIME ? `${DEFAULT_NULL}${minutes}` : minutes;
+
   return `${formattedHours}h${formattedMinutes}m`;
 }
 

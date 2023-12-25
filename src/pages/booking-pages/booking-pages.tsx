@@ -8,8 +8,8 @@ import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import {getBookQuest} from '../../services/thunk/get-booking-quest';
 import {useNavigate, useParams} from 'react-router-dom';
 import {ButtonTimeBookingComponent} from '../../components/button-time-booking-component/button-time-booking-component';
-import {AppRoute, AuthorizationStatus, Day} from '../../const';
-import {AddressComponent } from '../../components/address-component/address-component';
+import {AppRoute, AuthorizationStatus, Day, Person, VALIDATION_AGREEMENT, ValidationName, ValidationParticipant, ValidationTelephone} from '../../const';
+import {AddressComponent} from '../../components/address-component/address-component';
 import {useForm} from 'react-hook-form';
 import type {SubmitHandler} from 'react-hook-form';
 import {fetchQuestAction} from '../../services/thunk/fetch-quest';
@@ -25,7 +25,7 @@ type BookingPagesProps = {
   title: string;
 }
 
-type FormData = {
+type FormDataBooking = {
   name: string;
   tel: string;
   people: string;
@@ -67,7 +67,7 @@ function BookingPages ({title}: BookingPagesProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<FormDataBooking>({
     defaultValues: {
       name: '',
       tel: '',
@@ -77,7 +77,7 @@ function BookingPages ({title}: BookingPagesProps) {
     },
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<FormDataBooking> = (data) => {
     const allDataBooking = {
       questId: id || '',
       date: stateTimeBooking?.day || '',
@@ -97,24 +97,24 @@ function BookingPages ({title}: BookingPagesProps) {
     dispatch(getMyReservation());
   };
 
-  const validateNumberOfParticipants = (value:string) => {
-    const minParticipants = quest?.peopleMinMax[0];
-    const maxParticipants = quest?.peopleMinMax[1];
+  function validateNumberOfParticipants (value:string) {
+    const minParticipants = quest?.peopleMinMax[Person.Min];
+    const maxParticipants = quest?.peopleMinMax[Person.Max];
 
     if (!value) {
-      return 'Количество участников обязательно';
+      return ValidationParticipant.Message;
     }
 
     if (minParticipants && +value < minParticipants) {
-      return `Выберите как минимум ${minParticipants} участника(ов)`;
+      return `${ValidationParticipant.MessageMin} ${minParticipants} ${ValidationParticipant.MessageEnding}`;
     }
 
     if (maxParticipants && +value > maxParticipants) {
-      return `Выберите не более ${maxParticipants} участника(ов)`;
+      return `${ValidationParticipant.MessageMax} ${maxParticipants} ${ValidationParticipant.MessageEnding}`;
     }
 
     return true;
-  };
+  }
 
   if(errorServer !== null || errorReservation !== null){
     return <ErrorMessage title={AppRoute.Error}/>;
@@ -123,7 +123,6 @@ function BookingPages ({title}: BookingPagesProps) {
   if (isLoadingBooking) {
     return <LoadingComponent/>;
   }
-
 
   return (
     <div className="wrapper">
@@ -203,18 +202,18 @@ function BookingPages ({title}: BookingPagesProps) {
                   id="name"
                   placeholder="Имя"
                   {...register('name', {
-                    required: 'Имя обязательно',
+                    required: ValidationName.Required,
                     minLength: {
-                      value: 1,
-                      message: 'Имя должно содержать как минимум 1 символ',
+                      value: ValidationName.MinLength.value,
+                      message: ValidationName.MinLength.message,
                     },
                     maxLength: {
-                      value: 15,
-                      message: 'Имя должно содержать не более 15 символов',
+                      value: ValidationName.MaxLength.value,
+                      message: ValidationName.MaxLength.message,
                     },
                     pattern: {
-                      value: /^[A-Za-zА-Яа-яЁё'\s-]+$/,
-                      message: 'Введите корректное имя',
+                      value: ValidationName.Pattern.value,
+                      message: ValidationName.Pattern.message,
                     },
                   })}
                   aria-invalid={errors['name'] ? 'true' : 'false'}
@@ -232,10 +231,10 @@ function BookingPages ({title}: BookingPagesProps) {
                   id="tel"
                   placeholder="Телефон"
                   {...register('tel', {
-                    required: 'Телефон обязателен',
+                    required: ValidationTelephone.Required,
                     pattern: {
-                      value: /^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$/,
-                      message: 'Введите телефон в формате +7(000)000-00-00.',
+                      value: ValidationTelephone.Value,
+                      message: ValidationTelephone.Message,
                     },
                   })}
                   aria-invalid={errors.tel ? 'true' : 'false'}
@@ -252,7 +251,7 @@ function BookingPages ({title}: BookingPagesProps) {
                   type="number"
                   id="person"
                   placeholder="Количество участников"
-                  {...register('people', { validate: validateNumberOfParticipants })}
+                  {...register('people', { validate: validateNumberOfParticipants})}
                   aria-invalid={errors.people ? 'true' : 'false'}
                 />
                 {errors.people && (
@@ -289,7 +288,7 @@ function BookingPages ({title}: BookingPagesProps) {
               <input
                 type="checkbox"
                 id="id-order-agreement"
-                {...register('userAgreement', {required: 'Вы должны согласиться cпользовательским соглашением для продолжения' })}
+                {...register('userAgreement', {required: VALIDATION_AGREEMENT})}
               />
               <span className="custom-checkbox__icon">
                 <svg width={20} height={17} aria-hidden="true">

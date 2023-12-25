@@ -26,4 +26,4 @@ function CardsPlaceComponent() {
   );
 }
 
-export { CardsPlaceComponent };
+export {CardsPlaceComponent};

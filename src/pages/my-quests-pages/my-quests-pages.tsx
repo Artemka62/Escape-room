@@ -44,11 +44,9 @@ function MyQuestsPages({title}: MyQuestsPagesProps) {
     <div className="wrapper">
       <header className="header">
         <div className="container container--size-l">
-
           <LogotypeComponent/>
           <NavigationComponent/>
           <ProfileComponent/>
-
         </div>
       </header>
       <main className="page-content decorated-page">

@@ -33,27 +33,25 @@ type QuestPageCard = {
   coverImgWebp: string;
 };
 
-type BookingTimeToday ={
+type BookingTime ={
   time: string;
   isAvailable: boolean;
 };
 
+type BookingLocation = {
+  address: string;
+  coords: [number, number];
+};
+
+type BookingSlots = {
+  today: [BookingTime];
+  tomorrow: [BookingTime];
+};
 
 type BookingQuest = {
   id: string;
-  location: {
-    address: string;
-    coords: [number, number];
-    };
-  slots: {
-    today: [BookingTimeToday];
-    tomorrow: [
-      {
-        time: string;
-        isAvailable: boolean;
-      }
-    ];
-  };
+  location: BookingLocation;
+  slots: BookingSlots;
 }
 
 type DataBooking = {
@@ -69,6 +67,6 @@ export type {
   QuestCard,
   QuestPageCard,
   BookingQuest,
-  BookingTimeToday,
+  BookingTime as BookingTimeToday,
   DataBooking
 };

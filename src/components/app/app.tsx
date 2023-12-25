@@ -15,8 +15,10 @@ import {fetchQuestsAction} from '../../services/thunk/fetch-quests';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
+
   dispatch(fetchQuestsAction());
   dispatch(checkAuthAction());
+
   return (
     <BrowserRouter>
       <Routes>

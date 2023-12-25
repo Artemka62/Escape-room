@@ -2,6 +2,8 @@ const AUTH_TOKEN_KEY_NAME = 'escape-room-token';
 const URL_SERVER = 'https://grading.design.htmlacademy.pro/v1/escape-room';
 const REQUEST_TIMEOUT = 5000;
 const DEFAULT_NULL = 0;
+const VALIDATION_AGREEMENT = 'Вы должны согласиться cпользовательским соглашением для продолжения';
+const FORMAT_TIME = 10;
 
 enum AppRoute {
   Main= '/',
@@ -87,12 +89,60 @@ const Map = {
   Zoom: 10
 } as const;
 
+const ValidationName = {
+  MinLength: {
+    value: 1,
+    message: 'Имя должно содержать как минимум 1 символ',
+  },
+  MaxLength: {
+    value: 15,
+    message: 'Имя должно содержать не более 15 символов',
+  },
+  Pattern: {
+    value: /^[A-Za-zА-Яа-яЁё'\s-]+$/,
+    message: 'Введите корректное имя',
+  },
+  Required: 'Имя обязательно',
+
+} as const;
+
+const ValidationTelephone = {
+  Value: /^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$/,
+  Message: 'Введите телефон в формате +7(000)000-00-00',
+  Required: 'Телефон обязателен'
+} as const;
+
+const ValidationEmail = {
+  Required: 'Адрес электронной почты обязателен',
+  Pattern: {
+    value: /\S+@\S+\.\S+/,
+    message: 'Введите корректный адрес электронной почты',
+  }
+} as const;
+
+const ValidationPassword = {
+  Required: 'Пароль обязателен',
+  Pattern: {
+    value: /^(?=.*[A-Za-zА-Яа-я])(?=.*\d).{3,15}$/,
+    message:
+      'Пароль должен содержать минимум одну букву и одну цифру, от 3 до 15 символов',
+  },
+} as const;
+
+const ValidationParticipant = {
+  Message: 'Количество участников обязательно',
+  MessageMin: 'Выберите как минимум',
+  MessageMax: 'Выберите не более',
+  MessageEnding: 'участника(ов)'
+} as const;
 
 export {
   AUTH_TOKEN_KEY_NAME,
   URL_SERVER,
   REQUEST_TIMEOUT,
   DEFAULT_NULL,
+  VALIDATION_AGREEMENT,
+  FORMAT_TIME,
   AppRoute,
   TitleDescription,
   ApiRoute,
@@ -103,5 +153,10 @@ export {
   Person,
   GenreQuestRu,
   Day,
-  Map
+  Map,
+  ValidationName,
+  ValidationTelephone,
+  ValidationEmail,
+  ValidationPassword,
+  ValidationParticipant
 };

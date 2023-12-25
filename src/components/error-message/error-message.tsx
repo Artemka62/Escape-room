@@ -10,8 +10,9 @@ type OfferPagesProps = {
 }
 
 function ErrorMessage ({title} : OfferPagesProps): JSX.Element | null {
-  useDocumentTitle(title);
   const dispatch = useAppDispatch();
+
+  useDocumentTitle(title);
 
   function handleClick () {
     dispatch(checkAuthAction());

@@ -1,4 +1,4 @@
-import { BookingQuest } from '../store/type-store';
+import {BookingQuest} from '../store/type-store';
 
 const mockPoint: BookingQuest[] = [
   {

@@ -5,7 +5,7 @@ import {useForm} from 'react-hook-form';
 import {loginAction} from '../../services/thunk/login-actions';
 import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import {ErrorMessage} from '../../components/error-message/error-message';
-import {AppRoute} from '../../const';
+import {AppRoute, VALIDATION_AGREEMENT, ValidationEmail, ValidationPassword} from '../../const';
 import {useEffect} from 'react';
 import {fetchQuestsAction} from '../../services/thunk/fetch-quests';
 import type {SubmitHandler} from 'react-hook-form';
@@ -106,10 +106,10 @@ function LoginPages({title}: LoginPagesProps) {
                       id="email"
                       placeholder="Адрес электронной почты"
                       {...register('email', {
-                        required: 'Адрес электронной почты обязателен',
+                        required: ValidationEmail.Required,
                         pattern: {
-                          value: /\S+@\S+\.\S+/,
-                          message: 'Введите корректный адрес электронной почты',
+                          value: ValidationEmail.Pattern.value,
+                          message: ValidationEmail.Pattern.message,
                         },
                       })}
                       aria-invalid={errors.email ? 'true' : 'false'}
@@ -127,11 +127,10 @@ function LoginPages({title}: LoginPagesProps) {
                       id="password"
                       placeholder="Пароль"
                       {...register('password', {
-                        required: 'Пароль обязателен',
+                        required: ValidationPassword.Required,
                         pattern: {
-                          value: /^(?=.*[A-Za-zА-Яа-я])(?=.*\d).{3,15}$/,
-                          message:
-                            'Пароль должен содержать минимум одну букву и одну цифру, от 3 до 15 символов',
+                          value: ValidationPassword.Pattern.value,
+                          message: ValidationPassword.Pattern.message,
                         },
                       })}
                       aria-invalid={errors.password ? 'true' : 'false'}
@@ -152,7 +151,7 @@ function LoginPages({title}: LoginPagesProps) {
                 <input
                   type="checkbox"
                   id="id-order-agreement"
-                  {...register('userAgreement', { required: 'Вы должны согласиться cпользовательским соглашением для продолжения' })}
+                  {...register('userAgreement', { required: VALIDATION_AGREEMENT})}
                 />
                 <span className="custom-checkbox__icon">
                   <svg width={20} height={17} aria-hidden="true">
