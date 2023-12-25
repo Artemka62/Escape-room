@@ -1,13 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import {AppRoute} from '../../const';
+import {StatePages} from '../type-store';
 
-type InitialState = {
-  page: string;
-  pageForLink: string;
-}
-
-const initialState: InitialState = {
+const initialState: StatePages = {
   page: AppRoute.Main,
   pageForLink: AppRoute.Main
 };

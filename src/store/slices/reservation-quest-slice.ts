@@ -2,12 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {ResponseDataBooking} from '../../services/type-service';
 import {getMyReservation} from '../../services/thunk/get-my-reservation';
 import type {PayloadAction} from '@reduxjs/toolkit';
-
-type StateReservationQuests = {
-  quests: ResponseDataBooking[] | null;
-  loadingStatus: boolean | null;
-  error: null | string;
-}
+import {StateReservationQuests} from '../type-store';
 
 const initialState: StateReservationQuests = {
   quests: null,
@@ -21,6 +16,9 @@ const reservationQuestsSlice = createSlice({
   reducers: {
     reservationQuests(state, action: PayloadAction<ResponseDataBooking[]>) {
       state.quests = action.payload;
+    },
+    reservationError(state, action: PayloadAction<string | null>) {
+      state.error = action.payload;
     },
   },
   extraReducers(builder) {

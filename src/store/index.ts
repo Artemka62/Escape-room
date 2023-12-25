@@ -7,6 +7,7 @@ import {questSlice} from './slices/quest-slice';
 import {bookingQuestSlice} from './slices/booking-quest-slice';
 import {reservationQuestsSlice} from './slices/reservation-quest-slice';
 import {pageSlice} from './slices/pages-slice';
+import {deleteReservationSlice} from './slices/delete-reservation-slice';
 
 
 const reducer = combineReducers({
@@ -16,7 +17,8 @@ const reducer = combineReducers({
   [questSlice.name]: questSlice.reducer,
   [bookingQuestSlice.name]: bookingQuestSlice.reducer,
   [reservationQuestsSlice.name]: reservationQuestsSlice.reducer,
-  [pageSlice.name]: pageSlice.reducer
+  [pageSlice.name]: pageSlice.reducer,
+  [deleteReservationSlice.name]: deleteReservationSlice.reducer
 });
 
 const api = createApi();

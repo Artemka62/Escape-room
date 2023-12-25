@@ -1,10 +1,10 @@
-import {BookingTimeToday} from '../../store/type-store';
+import {BookingTime} from '../../store/type-store';
 import {formatTime} from '../../utils';
 import {useAppDispatch} from '../../hooks/use-store';
 import {bookingQuestSlice} from '../../store/slices/booking-quest-slice';
 
 type ButtonTimeBookingProps = {
-  data: BookingTimeToday;
+  data: BookingTime;
   day: string;
 }
 

@@ -22,6 +22,7 @@ function MyQuestsPages({title}: MyQuestsPagesProps) {
   const authStatus = useAppSelector((state) => state.authorizationStatus.authStatus);
   const navigate = useNavigate();
   const isErrorServer = useAppSelector((state)=> state.reservationQuests.error);
+  const deleteReservationError = useAppSelector((state)=> state.deleteReservation.error);
 
   useEffect(() => {
     if (authStatus !== AuthorizationStatus.Auth) {
@@ -36,7 +37,7 @@ function MyQuestsPages({title}: MyQuestsPagesProps) {
 
   useDocumentTitle(title);
 
-  if(isErrorServer !== null){
+  if(isErrorServer !== null || deleteReservationError !== null){
     return <ErrorMessage title ={AppRoute.Error}/>;
   }
 

@@ -1,3 +1,4 @@
+import {ResponseDataBooking} from '../services/type-service';
 import {store} from '../store/index';
 
 type State = ReturnType<typeof store.getState>;
@@ -48,10 +49,42 @@ type BookingSlots = {
   tomorrow: [BookingTime];
 };
 
+type FilterState = {
+  filterGenre: string;
+  filterLevel : string;
+}
+
+type StatePages = {
+  page: string;
+  pageForLink: string;
+}
+
+type StateQuest = {
+  quest: QuestPageCard | null;
+  loadingStatus: boolean | null;
+  error: null | string;
+}
+
+type StateQuests = {
+  quests: QuestCard[] | null;
+  loadingStatus: boolean | null;
+  error: null | string;
+}
+
+type StateReservationQuests = {
+  quests: ResponseDataBooking[] | null;
+  loadingStatus: boolean | null;
+  error: null | string;
+}
+
 type BookingQuest = {
   id: string;
   location: BookingLocation;
   slots: BookingSlots;
+}
+
+type StateDeleteReservation = {
+  error: null | string;
 }
 
 type DataBooking = {
@@ -59,14 +92,32 @@ type DataBooking = {
   day: string;
 };
 
+type StateZBookingQuest ={
+  quest: BookingQuest[] | null;
+  isLoading: boolean;
+  id: string;
+  data: DataBooking | null;
+  isLoadingDataBooking: boolean;
+  dataQuestBooking: ResponseDataBooking | null;
+  error: boolean | string;
+  errorServer: string | null;
+}
+
 
 export type {
   State,
   AppDispatch,
   StateAuth,
   QuestCard,
+  StateDeleteReservation,
   QuestPageCard,
+  FilterState,
+  StatePages,
+  StateQuest,
+  StateQuests,
+  StateReservationQuests,
   BookingQuest,
-  BookingTime as BookingTimeToday,
-  DataBooking
+  BookingTime,
+  DataBooking,
+  StateZBookingQuest
 };

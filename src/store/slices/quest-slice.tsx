@@ -1,13 +1,7 @@
-import type {QuestPageCard} from '../type-store';
+import type {QuestPageCard, StateQuest} from '../type-store';
 import {createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import {fetchQuestAction} from '../../services/thunk/fetch-quest';
-
-type StateQuest = {
-  quest: QuestPageCard | null;
-  loadingStatus: boolean | null;
-  error: null | string;
-}
 
 const initialState: StateQuest = {
   quest: null,
