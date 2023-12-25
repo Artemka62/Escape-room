@@ -20,6 +20,7 @@ import {pageSlice} from '../../store/slices/pages-slice';
 import {LoadingComponent} from '../../components/loading-component/loading-component';
 import {getMyReservation} from '../../services/thunk/get-my-reservation';
 import {FooterComponent} from '../../components/footer-component/footer-component';
+import '../../pages/booking-pages/booking-page.css';
 
 type BookingPagesProps = {
   title: string;
@@ -47,6 +48,22 @@ function BookingPages ({title}: BookingPagesProps) {
   const errorReservation = useAppSelector((state)=> state.reservationQuests.error);
   const isLoadingBooking = useAppSelector((state)=> state.quest.loadingStatus);
   const authStatus = useAppSelector((state) => state.authorizationStatus.authStatus);
+  const idBooking = useAppSelector((state) => state.bookingQuest.id);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm<FormDataBooking>({
+    defaultValues: {
+      name: '',
+      tel: '',
+      people: '',
+      children: false,
+      userAgreement: false
+    },
+  });
 
   useEffect(() => {
     dispatch(getBookQuest(id || ''));
@@ -61,21 +78,12 @@ function BookingPages ({title}: BookingPagesProps) {
     }
   }, [authStatus, navigate]);
 
-  useDocumentTitle(title);
+  useEffect(() => {
+    reset();
+    dispatch(bookingQuestSlice.actions.errorBooking(false));
+  }, [idBooking]);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormDataBooking>({
-    defaultValues: {
-      name: '',
-      tel: '',
-      people: '',
-      children: false,
-      userAgreement: false
-    },
-  });
+  useDocumentTitle(title);
 
   const onSubmit: SubmitHandler<FormDataBooking> = (data) => {
     const allDataBooking = {
@@ -162,9 +170,7 @@ function BookingPages ({title}: BookingPagesProps) {
             <div className="booking-map">
               <div className="map">
                 <div className="map__container">
-
                   <MapComponent points={questsNear || []}/>
-
                 </div>
               </div>
               <AddressComponent address={findDataQuest?.location.address || ''}/>
@@ -257,7 +263,7 @@ function BookingPages ({title}: BookingPagesProps) {
                 {errors.people && (
                   <>
                     <br />
-                    <span role="alert">{errors.people.message}</span>
+                    <span role="alert" className='error'>{errors.people.message}</span>
                   </>
                 )}
               </div>
@@ -277,7 +283,7 @@ function BookingPages ({title}: BookingPagesProps) {
                 </span>
               </label>
             </fieldset>
-            {errorValidation !== false ? <span>{errorValidation}</span> : ''}
+            {errorValidation !== false ? <span className='error'>{errorValidation}</span> : ''}
             <button
               className="btn btn--accent btn--cta booking-form__submit"
               type="submit"

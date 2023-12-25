@@ -19,7 +19,7 @@ const questSlice = createSlice({
   name: 'quest',
   initialState,
   reducers: {
-    addQuestionList(state, action: PayloadAction<QuestPageCard>) {
+    questionList(state, action: PayloadAction<QuestPageCard>) {
       state.quest = action.payload;
     },
   },

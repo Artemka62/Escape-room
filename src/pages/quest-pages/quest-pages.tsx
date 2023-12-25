@@ -36,7 +36,7 @@ function QuestPages ({title}: QuestPagesProps) {
 
   useDocumentTitle(title);
 
-  function handleClick () {
+  function handleButtonClick () {
     dispatch(getBookQuest(quest?.id || ''));
   }
 
@@ -100,7 +100,7 @@ function QuestPages ({title}: QuestPagesProps) {
             </p>
             <Link to={authStatus === AuthorizationStatus.Auth ? `${AppRoute.Quest}/${quest?.id ?? ''}${AppRoute.Booking}` : AppRoute.Login}
               className="btn btn--accent btn--cta quest-page__btn"
-              onClick={handleClick}
+              onClick={handleButtonClick}
             >
               Забронировать
             </Link>

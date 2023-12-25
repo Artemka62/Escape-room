@@ -4,9 +4,9 @@ import {authStatusSlice} from './slices/auth-status-slice';
 import {questsSlice} from './slices/quests-slice';
 import {filtersSlice} from './slices/filters-slice';
 import {questSlice} from './slices/quest-slice';
-import { bookingQuestSlice } from './slices/booking-quest-slice';
-import { reservationQuestsSlice } from './slices/reservation-quest-slice';
-import { pageSlice } from './slices/pages-slice';
+import {bookingQuestSlice} from './slices/booking-quest-slice';
+import {reservationQuestsSlice} from './slices/reservation-quest-slice';
+import {pageSlice} from './slices/pages-slice';
 
 
 const reducer = combineReducers({

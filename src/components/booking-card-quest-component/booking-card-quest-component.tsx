@@ -13,7 +13,7 @@ type BookingCardProps = {
 function BookingCardQuestComponent ({quest}: BookingCardProps) {
   const dispatch = useAppDispatch();
 
-  function handleClickButton () {
+  function handleButtonClick () {
     dispatch(deleteReservation(quest.id)).unwrap().then(() => {
       dispatch(getMyReservation());
     });
@@ -59,7 +59,7 @@ function BookingCardQuestComponent ({quest}: BookingCardProps) {
             {setLevel(quest.quest.level)}
           </li>
         </ul>
-        <button onClick={handleClickButton}
+        <button onClick={handleButtonClick}
           className="btn btn--accent btn--secondary quest-card__btn"
           type="button"
         >

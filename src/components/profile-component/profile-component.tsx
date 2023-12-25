@@ -8,7 +8,7 @@ function ProfileComponent () {
   const authStatus = useAppSelector((state) => state.authorizationStatus.authStatus);
   const dispatch = useAppDispatch();
 
-  function handleClickButton () {
+  function handleButtonClick () {
     if(authStatus === AuthorizationStatus.Auth) {
       dispatch(pageSlice.actions.page(AppRoute.Quest));
       dispatch(logoutAction());
@@ -20,7 +20,7 @@ function ProfileComponent () {
       <Link
         to={authStatus === AuthorizationStatus.Auth ? AppRoute.Main : AppRoute.Login}
         className={`${authStatus === AuthorizationStatus.Auth ? 'btn  header__side-item btn--accent' : 'btn  header__side-item header__login-btn'}`}
-        onClick={handleClickButton}
+        onClick={handleButtonClick}
       >
         {authStatus === AuthorizationStatus.Auth ? 'Выйти' : 'Вход'}
       </Link>

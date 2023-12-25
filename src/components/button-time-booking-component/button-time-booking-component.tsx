@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import {BookingTimeToday} from '../../store/type-store';
 import {formatTime} from '../../utils';
 import {useAppDispatch} from '../../hooks/use-store';
@@ -11,7 +10,6 @@ type ButtonTimeBookingProps = {
 
 function ButtonTimeBookingComponent ({data, day}: ButtonTimeBookingProps) {
   const formattedTime = formatTime(data.time);
-  const [stateRequired, setStateRequired] = useState(false);
   const dispatch = useAppDispatch();
 
   const dataForBooking = {
@@ -19,9 +17,9 @@ function ButtonTimeBookingComponent ({data, day}: ButtonTimeBookingProps) {
     day: day
   };
 
-  function handleClick () {
-    setStateRequired(true);
+  function handleButtonClick () {
     dispatch(bookingQuestSlice.actions.dataBooking(dataForBooking));
+    dispatch(bookingQuestSlice.actions.errorBooking(false));
   }
 
   return (
@@ -30,10 +28,10 @@ function ButtonTimeBookingComponent ({data, day}: ButtonTimeBookingProps) {
         type="radio"
         id={`${day}${formattedTime}`}
         name="date"
-        required={stateRequired}
+
         defaultValue={`${day}${formattedTime}`}
         disabled={!data.isAvailable}
-        onClick ={handleClick}
+        onClick ={handleButtonClick}
       />
       <span className="custom-radio__label">{data.time}</span>
     </label>

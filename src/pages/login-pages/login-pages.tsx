@@ -10,6 +10,7 @@ import {useEffect} from 'react';
 import {fetchQuestsAction} from '../../services/thunk/fetch-quests';
 import type {SubmitHandler} from 'react-hook-form';
 import {FooterComponent} from '../../components/footer-component/footer-component';
+import '../login-pages/login-pages.css';
 
 type LoginPagesProps = {
   title: string;

@@ -17,10 +17,10 @@ const authStatusSlice = createSlice({
   name: 'authorizationStatus',
   initialState,
   reducers: {
-    addUserStatus(state, action: PayloadAction<string>) {
+    userStatus(state, action: PayloadAction<string>) {
       state.authStatus = action.payload;
     },
-    addErrorStatus(state, action: PayloadAction<string | null>) {
+    errorStatus(state, action: PayloadAction<string | null>) {
       state.error = action.payload;
     }
   },
@@ -36,6 +36,7 @@ const authStatusSlice = createSlice({
       })
       .addCase(checkAuthAction.pending, (state) => {
         state.isLoadingAuth = true;
+        state.error = null;
       })
       .addCase(loginAction.fulfilled, (state) => {
         state.authStatus = AuthorizationStatus.Auth;
