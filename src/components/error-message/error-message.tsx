@@ -6,7 +6,7 @@ import {checkAuthAction} from '../../services/thunk/check-auth-actions';
 import {fetchQuestsAction} from '../../services/thunk/fetch-quests';
 import {pageSlice} from '../../store/slices/pages-slice';
 import {deleteReservationSlice} from '../../store/slices/delete-reservation-slice';
-import { reservationQuestsSlice } from '../../store/slices/reservation-quest-slice';
+import {reservationQuestsSlice} from '../../store/slices/reservation-quest-slice';
 
 type OfferPagesProps = {
   title: string;

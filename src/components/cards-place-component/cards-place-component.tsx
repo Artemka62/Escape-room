@@ -1,6 +1,7 @@
 import {DEFAULT_NULL, FilterGenre, FilterLevel} from '../../const';
 import {useAppSelector} from '../../hooks/use-store';
 import {CardQuestComponent} from '../card-quest-component/card-quest-component';
+import '../cards-place-component/card-place-component.css';
 
 function CardsPlaceComponent() {
   const stateQuestions = useAppSelector((state) => state.quests.quests);
@@ -14,7 +15,7 @@ function CardsPlaceComponent() {
 
   if(filteredQuestions.length === DEFAULT_NULL) {
 
-    return <div>Нет предложений такого уровня сложности</div>;
+    return <div className='no-quest'>Нет предложений такого уровня сложности</div>;
   }
 
   return (

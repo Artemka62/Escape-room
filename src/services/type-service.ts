@@ -1,5 +1,5 @@
 import {AxiosInstance} from 'axios';
-import { AppDispatch, State } from '../store/type-store';
+import {AppDispatch, State} from '../store/type-store';
 
 type Token = string;
 

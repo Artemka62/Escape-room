@@ -1,9 +1,20 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {getBookQuest} from '../../services/thunk/get-booking-quest';
-import {BookingQuest, DataBooking, StateZBookingQuest} from '../type-store';
+import {BookingQuest, DataBooking} from '../type-store';
 import {sendDataBooking} from '../../services/thunk/send-data-booking';
 import {ResponseDataBooking} from '../../services/type-service';
 import {DEFAULT_NULL} from '../../const';
+
+type StateZBookingQuest ={
+  quest: BookingQuest[] | null;
+  isLoading: boolean;
+  id: string;
+  data: DataBooking | null;
+  isLoadingDataBooking: boolean;
+  dataQuestBooking: ResponseDataBooking | null;
+  error: boolean | string;
+  errorServer: string | null;
+}
 
 const initialState: StateZBookingQuest = {
   quest: null,

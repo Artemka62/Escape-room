@@ -28,7 +28,6 @@ function ButtonTimeBookingComponent ({data, day}: ButtonTimeBookingProps) {
         type="radio"
         id={`${day}${formattedTime}`}
         name="date"
-
         defaultValue={`${day}${formattedTime}`}
         disabled={!data.isAvailable}
         onClick ={handleButtonClick}

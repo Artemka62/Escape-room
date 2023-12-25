@@ -66,4 +66,4 @@ function MapComponent({points}: MapComponentProps) {
   );
 }
 
-export { MapComponent };
+export {MapComponent};

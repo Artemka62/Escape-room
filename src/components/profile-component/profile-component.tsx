@@ -3,6 +3,7 @@ import {AppRoute, AuthorizationStatus} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import {logoutAction} from '../../services/thunk/logout-action';
 import {pageSlice} from '../../store/slices/pages-slice';
+import {fetchQuestsAction} from '../../services/thunk/fetch-quests';
 
 function ProfileComponent () {
   const authStatus = useAppSelector((state) => state.authorizationStatus.authStatus);
@@ -12,6 +13,7 @@ function ProfileComponent () {
     if(authStatus === AuthorizationStatus.Auth) {
       dispatch(pageSlice.actions.page(AppRoute.Quest));
       dispatch(logoutAction());
+      dispatch(fetchQuestsAction());
     }
   }
 

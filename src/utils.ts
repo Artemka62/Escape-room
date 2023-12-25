@@ -1,4 +1,4 @@
-import { FilterGenre, LevelQuestRu, GenreQuestRu, FilterLevel, FORMAT_TIME, DEFAULT_NULL } from './const';
+import {FilterGenre, LevelQuestRu, GenreQuestRu, FilterLevel, FORMAT_TIME, DEFAULT_NULL} from './const';
 
 function setLevel (level: string) {
   switch (level) {
