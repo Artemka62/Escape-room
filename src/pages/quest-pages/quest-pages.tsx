@@ -26,8 +26,6 @@ function QuestPages ({title}: QuestPagesProps) {
   const isLoadingQuest = useAppSelector((state)=> state.quest.loadingStatus);
   const isError = useAppSelector((state)=> state.quest.error);
 
-  useDocumentTitle(title);
-
   useEffect(() => {
     dispatch(pageSlice.actions.pageForLink(`${AppRoute.Quest}/${id || ''}`));
 
@@ -35,6 +33,8 @@ function QuestPages ({title}: QuestPagesProps) {
       dispatch(fetchQuestAction(id));
     }
   },[]);
+
+  useDocumentTitle(title);
 
   function handleClick () {
     dispatch(getBookQuest(quest?.id || ''));
@@ -52,11 +52,9 @@ function QuestPages ({title}: QuestPagesProps) {
     <div className="wrapper">
       <header className="header">
         <div className="container container--size-l">
-
           <LogotypeComponent/>
           <NavigationComponent/>
           <ProfileComponent/>
-
         </div>
       </header>
       <main className="decorated-page quest-page">

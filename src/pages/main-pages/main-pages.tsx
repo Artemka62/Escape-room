@@ -12,7 +12,7 @@ import {pageSlice} from '../../store/slices/pages-slice';
 import {LoadingComponent} from '../../components/loading-component/loading-component';
 import {checkAuthAction} from '../../services/thunk/check-auth-actions';
 import {ErrorMessage} from '../../components/error-message/error-message';
-import { FooterComponent } from '../../components/footer-component/footer-component';
+import {FooterComponent} from '../../components/footer-component/footer-component';
 
 type MainPagesProps = {
   title: string;
@@ -23,13 +23,13 @@ function MainPages ({title}: MainPagesProps) {
   const isLoadingAuth = useAppSelector((state)=> state.authorizationStatus.isLoadingAuth);
   const error = useAppSelector((state) => state.quests.error);
 
-  useDocumentTitle(title);
-
   useEffect(() => {
     dispatch(fetchQuestsAction());
     dispatch(pageSlice.actions.pageForLink(AppRoute.Main));
     dispatch(checkAuthAction());
   }, []);
+
+  useDocumentTitle(title);
 
   if (isLoadingAuth) {
     return <LoadingComponent/>;

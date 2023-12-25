@@ -2,8 +2,7 @@ import {Link} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import {logoutAction} from '../../services/thunk/logout-action';
-import { pageSlice } from '../../store/slices/pages-slice';
-
+import {pageSlice} from '../../store/slices/pages-slice';
 
 function ProfileComponent () {
   const authStatus = useAppSelector((state) => state.authorizationStatus.authStatus);

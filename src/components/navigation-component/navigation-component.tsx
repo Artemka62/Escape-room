@@ -3,7 +3,6 @@ import {AppRoute, AuthorizationStatus} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import {pageSlice} from '../../store/slices/pages-slice';
 
-
 function NavigationComponent () {
   const isAuth = useAppSelector((state) => state.authorizationStatus.authStatus);
   const statusPage = useAppSelector((state) => state.page.page);

@@ -1,4 +1,4 @@
-import {FilterGenre, FilterLevel} from '../../const';
+import {DEFAULT_NULL, FilterGenre, FilterLevel} from '../../const';
 import {useAppSelector} from '../../hooks/use-store';
 import {CardQuestComponent} from '../card-quest-component/card-quest-component';
 
@@ -12,9 +12,9 @@ function CardsPlaceComponent() {
     .filter((question) => stateFilterLevel === FilterLevel.Any || question.level === stateFilterLevel)
     : [];
 
+  if(filteredQuestions.length === DEFAULT_NULL) {
 
-  if(filteredQuestions.length === 0) {
-    return 'нет предложений такого уровня сложности';
+    return <div>Нет предложений такого уровня сложности</div>;
   }
 
   return (

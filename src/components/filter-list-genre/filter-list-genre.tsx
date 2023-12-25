@@ -4,7 +4,6 @@ import {filtersSlice} from '../../store/slices/filters-slice';
 import {FilterGenre} from '../../const';
 
 function FilterListGenreComponent () {
-
   const dispatch = useAppDispatch();
   const stateFilter = useAppSelector((state) => state.filter.filterGenre);
 

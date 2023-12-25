@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 import {BookingCardQuestComponent} from '../../components/booking-card-quest-component/booking-card-quest-component';
 import {LogotypeComponent} from '../../components/logotype-component/logotype-component';
 import {NavigationComponent} from '../../components/navigation-component/navigation-component';

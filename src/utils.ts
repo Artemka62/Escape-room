@@ -37,5 +37,4 @@ function formatTime (timeString: string): string {
   return `${formattedHours}h${formattedMinutes}m`;
 }
 
-
 export {setLevel, setGenre, formatTime};

@@ -5,7 +5,7 @@ import {LoadingComponent} from '../loading-component/loading-component';
 import {AppRoute, DEFAULT_NULL, Map} from '../../const';
 import {useEffect, useState} from 'react';
 import * as L from 'leaflet';
-import {bookingQuestSlice} from '../../store/slices/bookink-quest-slice';
+import {bookingQuestSlice} from '../../store/slices/booking-quest-slice';
 
 type MapComponentProps = {
   points: BookingQuest[];

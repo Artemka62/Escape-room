@@ -21,7 +21,7 @@ function ErrorMessage ({title} : OfferPagesProps): JSX.Element | null {
   return(
     <div>
       <h1 >404 Not Found</h1>
-      <Link to={AppRoute.Main}><p onClick={handleClick}> Перейти на главную страницу</p></Link>
+      <Link to={AppRoute.Main}><p onClick={handleClick}>Перейти на главную страницу</p></Link>
     </div>
   );
 }

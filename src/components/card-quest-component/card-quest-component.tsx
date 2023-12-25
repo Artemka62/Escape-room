@@ -6,28 +6,16 @@ import {fetchQuestAction} from '../../services/thunk/fetch-quest';
 import {useAppDispatch} from '../../hooks/use-store';
 import {setLevel} from '../../utils';
 
-
 type QuestProps = {
   quest: QuestCard;
 }
 
 function CardQuestComponent ({quest}: QuestProps) {
-
   const dispatch = useAppDispatch();
 
   const [cardState, setCardState] = useState({
     questId: quest.id
   });
-
-
-  function handelPointOffer () {
-    //dispatch(offerSlice.actions.addLoadOfferCard(offer));
-
-  }
-
-  function handelLeavePointOffer () {
-    //dispatch(offerSlice.actions.addLoadOfferCard(null));
-  }
 
   function handelClickCard () {
     setCardState({
@@ -42,8 +30,6 @@ function CardQuestComponent ({quest}: QuestProps) {
     <div
       className="quest-card"
       onClick = {handelClickCard}
-      onMouseEnter={handelPointOffer}
-      onMouseLeave={handelLeavePointOffer}
     >
       <div className="quest-card__img">
         <picture>

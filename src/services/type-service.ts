@@ -39,8 +39,22 @@ type SendDataBooking = {
   placeId: string;
 }
 
-type ResponseDataBooking ={
+type Location ={
+  address: string;
+  coords: [number];
+}
+type Quest = {
 
+  id: string;
+  title: string;
+  previewImg: string;
+  previewImgWebp: string;
+  level: string;
+  type: string;
+  peopleMinMax: [number, number] | [number];
+};
+
+type ResponseDataBooking = {
     date: string;
     time: string;
     contactPerson: string;
@@ -48,19 +62,16 @@ type ResponseDataBooking ={
     withChildren: boolean;
     peopleCount: number;
     id: string;
-    location: {
-      address: string;
-      coords: [number];
-    };
-    quest: {
-      id: string;
-      title: string;
-      previewImg: string;
-      previewImgWebp: string;
-      level: string;
-      type: string;
-      peopleMinMax: [number, number] | [number];
-  };
+    location: Location;
+    quest: Quest;
 }
 
-export type {Token, Thunk, User, UserDataLogin, AuthData, SendDataBooking, ResponseDataBooking};
+export type {
+  Token,
+  Thunk,
+  User,
+  UserDataLogin,
+  AuthData,
+  SendDataBooking,
+  ResponseDataBooking
+};

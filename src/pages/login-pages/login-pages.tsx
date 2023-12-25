@@ -22,7 +22,6 @@ type FormData = {
 };
 
 function LoginPages({title}: LoginPagesProps) {
-  useDocumentTitle(title);
   const dispatch = useAppDispatch();
   const isError = useAppSelector((state) => state.authorizationStatus.error);
   const isErrorServer = useAppSelector((state)=> state.quests.error);
@@ -30,6 +29,8 @@ function LoginPages({title}: LoginPagesProps) {
   useEffect(() => {
     dispatch(fetchQuestsAction());
   }, []);
+
+  useDocumentTitle(title);
 
   const {
     register,

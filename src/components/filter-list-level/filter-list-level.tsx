@@ -1,4 +1,4 @@
-import { FilterLevel } from '../../const';
+import {FilterLevel} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks/use-store';
 import {filtersSlice} from '../../store/slices/filters-slice';
 

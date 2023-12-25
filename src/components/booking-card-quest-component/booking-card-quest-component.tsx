@@ -13,7 +13,6 @@ type BookingCardProps = {
 function BookingCardQuestComponent ({quest}: BookingCardProps) {
   const dispatch = useAppDispatch();
 
-
   function handleClickButton () {
     dispatch(deleteReservation(quest.id)).unwrap().then(() => {
       dispatch(getMyReservation());

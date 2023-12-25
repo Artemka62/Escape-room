@@ -14,7 +14,7 @@ import {useForm} from 'react-hook-form';
 import type {SubmitHandler} from 'react-hook-form';
 import {fetchQuestAction} from '../../services/thunk/fetch-quest';
 import {sendDataBooking} from '../../services/thunk/send-data-booking';
-import {bookingQuestSlice} from '../../store/slices/bookink-quest-slice';
+import {bookingQuestSlice} from '../../store/slices/booking-quest-slice';
 import {ErrorMessage} from '../../components/error-message/error-message';
 import {pageSlice} from '../../store/slices/pages-slice';
 import {LoadingComponent} from '../../components/loading-component/loading-component';
@@ -61,6 +61,8 @@ function BookingPages ({title}: BookingPagesProps) {
     }
   }, [authStatus, navigate]);
 
+  useDocumentTitle(title);
+
   const {
     register,
     handleSubmit,
@@ -91,6 +93,7 @@ function BookingPages ({title}: BookingPagesProps) {
       navigate(AppRoute.MyQuest);
       dispatch(bookingQuestSlice.actions.errorBooking(false));
     });
+
     dispatch(getMyReservation());
   };
 
@@ -112,9 +115,6 @@ function BookingPages ({title}: BookingPagesProps) {
 
     return true;
   };
-
-  useDocumentTitle(title);
-
 
   if(errorServer !== null || errorReservation !== null){
     return <ErrorMessage title={AppRoute.Error}/>;
